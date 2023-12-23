@@ -1,0 +1,84 @@
+@use '../base/vars';
+
+$default-input-height: 48px;
+$small-input-height: 40px;
+
+.search-form {
+    $component-selector: &;
+
+    display: flex;
+    position: relative;
+
+    &__input {
+        display: inline-flex;
+        flex-direction: column;
+        min-width: 284px;
+        min-height: $default-input-height;
+        max-height: $default-input-height;
+        padding: 6px 12px;
+        border: 1px solid vars.$color-gray;
+        border-radius: 5px;
+
+        &:hover,
+        &:focus {
+            border-color: vars.$color-black;
+        }
+
+        &:focus {
+            outline: 2px solid black;
+        }
+    }
+
+    &__results {
+        position: absolute;
+        z-index: 999;
+        top: 56px;
+        left: 0;
+        right: 0;
+    }
+
+    &__btn {
+        $btn-selector: &;
+        position: absolute;
+
+        &--clear {
+            @extend #{$btn-selector};
+            top: 50%;
+            right: 52px;
+            transform: translateY(-50%);
+        }
+
+        &--search {
+            @extend #{$btn-selector};
+            right: 0;
+        }
+    }
+
+    &[size="small"] {
+        #{$component-selector}__input {
+            padding: 9.5px 12px;
+            min-height: $small-input-height;
+            max-height: $small-input-height;
+        }
+    }
+
+    &[size="small"] {
+        #{$component-selector}__btn {
+            &--clear {
+                top: 50%;
+                right: 44px;
+                transform: translateY(-50%);
+            }
+
+            &--search {
+                top: 50%;
+                right: 12px;
+                transform: translateY(-50%);
+            }
+        }
+
+        #{$component-selector}__results {
+            top: 44px;
+        }
+    }
+}

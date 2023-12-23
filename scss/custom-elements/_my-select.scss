@@ -1,0 +1,62 @@
+@use "../base/vars";
+
+.select {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 200px;
+    max-width: 300px;
+    min-height: 48px;
+    max-height: 48px;
+    position: relative;
+
+    &__btn {
+        min-height: 48px;
+        max-height: 48px;
+    }
+
+    &__lst {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        border: 1px solid vars.$color-gray;
+        border-radius: 5px;
+        cursor: pointer;
+        overflow: hidden;
+
+        &:hover {
+            border-color: vars.$color-black;
+        }
+    }
+
+    &__option {
+        padding: 6px 11px;
+        white-space: nowrap;
+        user-select: none;
+
+        & p {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        &:hover {
+            background-color: vars.$color-hover-row-gray;
+        }
+    }
+
+    $select-selector: &;
+
+    &[show='false'] {
+        #{$select-selector}__btn {
+            & my-icon {
+                transform: rotate(180deg);
+            }
+        }
+
+        #{$select-selector}__lst {
+            display: none;
+        }
+    }
+}

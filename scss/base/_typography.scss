@@ -1,0 +1,89 @@
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    letter-spacing: 0.25px;
+
+    &[style="body2"] {
+        font-size: 16px;
+        letter-spacing: 1.25px;
+    }
+
+    &[style="body3"] {
+        font-size: 14px;
+        letter-spacing: 1.25px;
+    }
+}
+
+h6 {
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.15px;
+}
+
+.my-input {
+    $component-selector: &;
+
+    &__input {
+        font-family: 'Lato', sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%;
+        letter-spacing: 0.25px;
+    }
+
+    &[small="true"] {
+        #{$component-selector}__input {
+            font-size: 16px;
+            letter-spacing: 1.25px;
+        }
+    }
+}
+
+search-form {
+    & input {
+        font-family: 'Lato', sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%;
+        letter-spacing: 0.25px;
+    }
+
+    &[size='small'] input {
+        font-size: 16px;
+        letter-spacing: 1.25px;
+    }
+}
+
+.my-button {
+    $component-selector: &;
+
+    &__text {
+        font-family: 'Lato', sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%;
+        letter-spacing: 0.25px;
+    }
+
+    &[size="small"] {
+        #{$component-selector}__text {
+            font-size: 14px;
+            letter-spacing: 1.25px;
+        }
+    }
+}
+
+.my-button--full,
+.my-button--icon,
+.my-button--text {
+    @extend .my-button;
+}
