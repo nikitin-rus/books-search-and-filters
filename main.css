@@ -83,86 +83,44 @@ search-form[size=small] input {
   line-height: 130%;
   letter-spacing: 0.25px;
 }
-.my-button[size=small] .my-button__text, [size=small].my-button--full .my-button__text,
-[size=small].my-button--icon .my-button__text,
-[size=small].my-button--text .my-button__text {
+.my-button[size=small] .my-button__text {
   font-size: 14px;
   letter-spacing: 1.25px;
 }
 
-.my-button, .my-button--full,
-.my-button--icon,
-.my-button--text, .my-button__icon--hidden {
+.my-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  min-width: 48px;
-  min-height: 48px;
-  max-height: 48px;
   padding: 11px;
   background-color: #FFFFFF;
   border: 1px solid #212121;
   color: #212121;
-  fill: #212121;
   border-radius: 5px;
   user-select: none;
   cursor: pointer;
 }
-.my-button:hover, .my-button--full:hover,
-.my-button--icon:hover,
-.my-button--text:hover, .my-button__icon--hidden:hover {
+.my-button:hover {
   opacity: 0.75;
-}
-.my-button[theme=inverse], [theme=inverse].my-button--full,
-[theme=inverse].my-button--icon,
-[theme=inverse].my-button--text, [theme=inverse].my-button__icon--hidden {
-  background-color: #212121;
-  border: 1px solid #212121;
-  color: #FFFFFF;
-  fill: #FFFFFF;
-}
-.my-button[size=small], [size=small].my-button--full,
-[size=small].my-button--icon,
-[size=small].my-button--text, [size=small].my-button__icon--hidden {
-  min-width: 28px;
-  min-height: 28px;
-  max-height: 28px;
-  padding: 4px;
 }
 .my-button__text {
   max-width: 100%;
   overflow: hidden;
 }
-.my-button__icon {
+.my-button__img {
   pointer-events: none;
 }
-.my-button__icon--hidden {
-  display: none;
+.my-button_full .my-button__text {
+  margin-right: 4px;
 }
-
-.my-button--icon {
-  max-width: 48px;
+.my-button[theme=inverse] {
+  background-color: #212121;
+  border: 1px solid #212121;
+  color: #FFFFFF;
 }
-.my-button--icon[size=small] {
-  max-width: 28px;
-}
-
-.my-icon {
-  min-width: 24px;
-  max-width: 24px;
-  min-height: 24px;
-  max-height: 24px;
-}
-.my-icon svg {
-  height: 100%;
-  width: 100%;
-}
-.my-icon[size=small] {
-  min-width: 16px;
-  max-width: 16px;
-  min-height: 16px;
-  max-height: 16px;
+.my-button[size=small] {
+  padding: 4px;
 }
 
 .select {

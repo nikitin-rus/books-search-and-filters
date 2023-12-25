@@ -1,10 +1,15 @@
 import { removeExtraWhitespaces } from "../helpers";
 import { logCustomElementState } from "../logging";
 
-// TODO: Добавить проверку на наличие перезаписанного метода initComponent с вызовом super()
-// TODO: Добавить конструктор, сохраняющий className кастомного элемента
 export default class CustomElementBase extends HTMLElement {
     isComponentCreated = false;
+
+    constructor(elementName, innerHTML) {
+        super();
+
+        this.classList.add(elementName);
+        this.innerHTML = innerHTML;
+    }
 
     initComponent() {
         logCustomElementState(this, "Initialization started");

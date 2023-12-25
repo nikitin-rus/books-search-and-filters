@@ -1,22 +1,16 @@
 @use "../base/vars";
 
-$default-size: 48px;
-$small-size: 28px;
-$border-width: 1px;
-
 .my-button {
+    $element-selector: &;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    min-width: $default-size;
-    min-height: $default-size;
-    max-height: $default-size;
     padding: 11px;
     background-color: vars.$color-white;
-    border: $border-width solid vars.$color-black;
+    border: 1px solid vars.$color-black;
     color: vars.$color-black;
-    fill: vars.$color-black;
     border-radius: 5px;
     user-select: none;
     cursor: pointer;
@@ -25,47 +19,28 @@ $border-width: 1px;
         opacity: 0.75;
     }
 
-    &[theme='inverse'] {
-        background-color: vars.$color-black;
-        border: 1px solid vars.$color-black;
-        color: vars.$color-white;
-        fill: vars.$color-white;
-    }
-
-    &[size='small'] {
-        min-width: $small-size;
-        min-height: $small-size;
-        max-height: $small-size;
-        padding: 4px;
-    }
-
     &__text {
         max-width: 100%;
         overflow: hidden;
     }
 
-    $component-selector: &;
-
-    &__icon {
+    &__img {
         pointer-events: none;
+    }
 
-        &--hidden {
-            @extend #{$component-selector};
-            display: none;
+    &_full {
+        #{$element-selector}__text {
+            margin-right: 4px;
         }
     }
-}
 
-.my-button--full,
-.my-button--icon,
-.my-button--text {
-    @extend .my-button;
-}
+    &[theme='inverse'] {
+        background-color: vars.$color-black;
+        border: 1px solid vars.$color-black;
+        color: vars.$color-white;
+    }
 
-.my-button--icon {
-    max-width: $default-size;
-
-    &[size="small"] {
-        max-width: $small-size;
+    &[size='small'] {
+        padding: 4px;
     }
 }

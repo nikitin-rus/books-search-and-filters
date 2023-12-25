@@ -1,4 +1,5 @@
-import MyIcon from "./src/custom-elements/my-icon";
+// TODO: Изменить define: добавлять название элементов по статическому свойсву из конструктора
+
 import MyButton from "./src/custom-elements/my-button";
 import MySelect from "./src/custom-elements/my-select";
 import MySelectOption from "./src/custom-elements/my-select-option";
@@ -6,7 +7,6 @@ import SearchForm from "./src/custom-elements/search-form";
 import SearchFormResults from "./src/custom-elements/search-form-results";
 
 const elements = {
-    "my-icon": MyIcon,
     "my-button": MyButton,
     "my-select": MySelect,
     "my-select-option": MySelectOption,
