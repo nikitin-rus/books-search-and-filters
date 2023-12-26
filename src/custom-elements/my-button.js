@@ -1,4 +1,6 @@
+import { logCustomElementState } from "../logging";
 import CustomElementBase from "./base-custom-element";
+import { elementSizeToIconDp, elementThemeToIconColor } from "../variables";
 
 export default class MyButton extends CustomElementBase {
     static elementName = "my-button";
@@ -19,7 +21,7 @@ export default class MyButton extends CustomElementBase {
 
     //#region attributeChanged callbacks
 
-    static observedAttributes = ['value', 'src'];
+    static observedAttributes = ['value', 'icon', 'size', 'theme'];
 
     /**
      * @param {String | null} oldVal 
@@ -31,11 +33,19 @@ export default class MyButton extends CustomElementBase {
      * @param {String | null} oldVal 
      * @param {String | null} newVal 
      */
-    srcAttrChanged = (oldVal, newVal) => {
-        // Triggers img load/error events
-        this.imgNode.src = newVal;
-        this.imgNode.hidden = !newVal;
-    }
+    iconAttrChanged = (oldVal, newVal) => this.updateIconSrc();
+
+    /**
+     * @param {String | null} oldVal 
+     * @param {String | null} newVal 
+     */
+    sizeAttrChanged = (oldVal, newVal) => this.updateIconSrc();
+
+    /**
+     * @param {String | null} oldVal 
+     * @param {String | null} newVal 
+     */
+    themeAttrChanged = (oldVal, newVal) => this.updateIconSrc();
 
     //#endregion
 
@@ -45,5 +55,17 @@ export default class MyButton extends CustomElementBase {
         } else {
             this.classList.remove(`${MyButton.elementName}_full`);
         }
+    }
+
+    updateIconSrc() {
+        const iconName = this.getAttribute('icon');
+        const color = elementThemeToIconColor[this.getAttribute('theme') ?? 'default'] ?? elementThemeToIconColor.default;
+        const size = elementSizeToIconDp[this.getAttribute('size') ?? 'default'] ?? elementSizeToIconDp.default;
+
+        const src = `/${iconName}/${iconName}_${color}_${size}dp.svg`;
+        logCustomElementState(this, `Changed icon src from ${this.imgNode.src} to ${src}`);
+
+        this.imgNode.src = src;
+        this.imgNode.hidden = !iconName;
     }
 }
