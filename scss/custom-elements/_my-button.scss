@@ -1,5 +1,10 @@
 @use "../base/vars";
 
+$button-default-height: 48px;
+$button-small-height: 28px;
+$button-square-default-size: $button-default-height;
+$button-square-small-size: $button-small-height;
+
 .my-button {
     $element-selector: &;
 
@@ -7,11 +12,19 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 11px;
-    background-color: vars.$color-white;
+
+    min-width: $button-square-default-size;
+    min-height: $button-default-height;
+    max-height: $button-default-height;
+
     border: 1px solid vars.$color-black;
-    color: vars.$color-black;
     border-radius: 5px;
+
+    padding: 12px;
+
+    background-color: vars.$color-white;
+    color: vars.$color-black;
+
     user-select: none;
     cursor: pointer;
 
@@ -41,6 +54,10 @@
     }
 
     &[size='small'] {
+        min-width: $button-square-small-size;
+        min-height: $button-small-height;
+        max-height: $button-small-height;
+
         padding: 4px;
     }
 }
