@@ -9,10 +9,10 @@ export function setAttributes(element, namesToValues) {
     }
 }
 
-/**
- * @param {String} str 
- * @returns {String} str without extra whitespaces like '\n', '\r', '\t', ' '.
- */
-export function removeExtraWhitespaces(str) {
-    return str.replace(/[\s]+/g, " ").trim();
-}
+// /**
+//  * @param {String} str 
+//  * @returns {String} str without extra whitespaces like '\n', '\r', '\t', ' '.
+//  */
+// export function removeExtraWhitespaces(str) {
+//     return str.replace(/[\s]+/g, " ");
+// }

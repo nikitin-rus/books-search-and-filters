@@ -1,6 +1,7 @@
-import { removeExtraWhitespaces } from "../helpers";
+// import { removeExtraWhitespaces } from "../helpers";
 import { logCustomElementState } from "../logging";
 
+// TODO: Сделать отписку от всех ивентов при удалении элемента из DOM
 export default class CustomElementBase extends HTMLElement {
     isComponentCreated = false;
 
@@ -30,9 +31,6 @@ export default class CustomElementBase extends HTMLElement {
      * @param {String | null} newVal 
      */
     attributeChangedCallback(attrName, oldVal, newVal) {
-        oldVal = oldVal ? removeExtraWhitespaces(oldVal) : oldVal;
-        newVal = newVal ? removeExtraWhitespaces(newVal) : newVal;
-
         logCustomElementState(this, `Attribute ${attrName} has changed from ${oldVal} to ${newVal}`);
 
         this[attrName + 'AttrChanged'](oldVal, newVal);

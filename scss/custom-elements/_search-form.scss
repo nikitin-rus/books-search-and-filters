@@ -1,23 +1,41 @@
 @use '../base/vars';
+@use 'my-button';
 
 $default-input-height: 48px;
 $small-input-height: 40px;
 
+$default-padding: 0px (8px + my-button.$button-square-small-size + 6px + my-button.$button-square-default-size) 0px 12px;
+$small-padding: 0px (8px + my-button.$button-square-small-size * 2 + 6px + 12px) 0px 12px;
+
+$btn-search-default-right-indent: 0;
+$btn-search-small-right-indent: 12px;
+$btn-close-default-right-indent: 8px + my-button.$button-square-default-size + $btn-search-default-right-indent;
+$btn-close-small-right-indent: 8px + my-button.$button-square-small-size + $btn-search-small-right-indent;
+
+$results-default-top-indent: $default-input-height + 8px; 
+$results-small-top-indent: $small-input-height + 8px; 
+
 .search-form {
     $component-selector: &;
 
-    display: flex;
+    display: inline-flex;
     position: relative;
 
+    min-width: 200px;
+    min-height: $default-input-height;
+    max-height: $default-input-height;
+
     &__input {
-        display: inline-flex;
+        display: flex;
         flex-direction: column;
-        min-width: 284px;
+
+        width: 100%;
         min-height: $default-input-height;
         max-height: $default-input-height;
-        padding: 6px 12px;
+
         border: 1px solid vars.$color-gray;
         border-radius: 5px;
+        padding: $default-padding;
 
         &:hover,
         &:focus {
@@ -32,53 +50,93 @@ $small-input-height: 40px;
     &__results {
         position: absolute;
         z-index: 999;
-        top: 56px;
+        top: $results-default-top-indent;
         left: 0;
         right: 0;
+
+        &-section {
+            display: flex;
+            flex-direction: column;
+            padding: 12px 0;
+            border: 1px solid vars.$color-black;
+            border-radius: 5px;
+        }
+
+        &-title {
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+
+        &-row {
+            padding: 12px;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                background-color: vars.$color-hover-row-gray;
+            }
+        }
     }
 
-    &__btn {
+    &[size="small"] {
+        #{$component-selector}__results {
+            top: $results-small-top-indent;
+
+            &-title {
+                padding: 0 6px;
+                margin-bottom: 6px;
+            }
+
+            &-section {
+                padding: 6px 0;
+            }
+
+            &-row {
+                padding: 6px;
+            }
+        }
+    }
+
+    &__button {
         $btn-selector: &;
         position: absolute;
 
-        &--clear {
+        &_close {
             @extend #{$btn-selector};
             top: 50%;
-            right: 52px;
+            right: $btn-close-default-right-indent;
             transform: translateY(-50%);
         }
 
-        &--search {
+        &_search {
             @extend #{$btn-selector};
-            right: 0;
+            right: $btn-search-default-right-indent;
         }
     }
 
     &[size="small"] {
+        min-height: $small-input-height;
+        max-height: $small-input-height;
+
         #{$component-selector}__input {
-            padding: 9.5px 12px;
             min-height: $small-input-height;
             max-height: $small-input-height;
-        }
-    }
 
-    &[size="small"] {
-        #{$component-selector}__btn {
-            &--clear {
+            padding: $small-padding;
+        }
+
+        #{$component-selector}__button {
+            &_close {
                 top: 50%;
-                right: 44px;
+                right: $btn-close-small-right-indent;
                 transform: translateY(-50%);
             }
 
-            &--search {
+            &_search {
                 top: 50%;
-                right: 12px;
+                right: $btn-search-small-right-indent;
                 transform: translateY(-50%);
             }
-        }
-
-        #{$component-selector}__results {
-            top: 44px;
         }
     }
 }
