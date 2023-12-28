@@ -1,5 +1,5 @@
 // TODO: Добавить фичу для логгирования ошибок
 
-export function logCustomElementState(customElementNode, message) {
-    console.log(`[${customElementNode.tagName} custom element] ${message}`);
+export function logCustomElementState(elementName, message) {
+    console.log(`[${elementName} custom element] ${message}`);
 }

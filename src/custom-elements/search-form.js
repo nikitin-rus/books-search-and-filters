@@ -72,7 +72,7 @@ export default class SearchForm extends CustomElementBase {
         this.setAttribute('value', e.target.value);
 
         if (e.target.value.length < 4 && !this.isSearchResultsShowPopular) {
-            logCustomElementState(this, `Filling search results with popular titles`);
+            logCustomElementState(SearchForm.elementName, `Filling search results with popular titles`);
 
             this.resultsNode.innerHTML = "";
 
@@ -86,7 +86,7 @@ export default class SearchForm extends CustomElementBase {
             setTimeout(() => {
                 // Если последовал ввод в input меньше, чем через секунду, не выполняем отложенный вызов
                 if (Date.now() - this.lastInputTime > 1000) {
-                    logCustomElementState(this, `Searching for matching titles to input '${e.target.value}' for search results block`);
+                    logCustomElementState(SearchForm.elementName, `Searching for matching titles to input '${e.target.value}' for search results block`);
 
                     this.resultsNode.innerHTML = "";
 
@@ -110,7 +110,7 @@ export default class SearchForm extends CustomElementBase {
     /** @param {MouseEvent} */
     inputClickEventHandler(e) {
         if (e.target.value.length < 4 && !this.isSearchResultsShowPopular) {
-            logCustomElementState(this, `Filling search results with popular titles`);
+            logCustomElementState(SearchForm.elementName, `Filling search results with popular titles`);
 
             this.resultsNode.innerHTML = "";
 
@@ -132,7 +132,7 @@ export default class SearchForm extends CustomElementBase {
     /** @param {MouseEvent} e */
     resultsClickEventHandler(e) {
         if (e.target.classList.contains(`${SearchForm.elementName}__results-row`)) {
-            logCustomElementState(this, `Dispatching search event with result value '${e.target.textContent}'`);
+            logCustomElementState(SearchForm.elementName, `Dispatching search event with result value '${e.target.textContent}'`);
 
             this.setAttribute('value', e.target.textContent);
 

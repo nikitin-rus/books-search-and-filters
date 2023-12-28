@@ -13,11 +13,11 @@ export default class CustomElementBase extends HTMLElement {
     }
 
     initComponent() {
-        logCustomElementState(this, "Initialization started");
+        logCustomElementState(this.constructor.elementName, "Initialization started");
     }
 
     connectedCallback() {
-        logCustomElementState(this, "Connected to DOM");
+        logCustomElementState(this.constructor.elementName, "Connected to DOM");
 
         if (this.isComponentCreated == false) {
             this.initComponent();
@@ -31,7 +31,7 @@ export default class CustomElementBase extends HTMLElement {
      * @param {String | null} newVal 
      */
     attributeChangedCallback(attrName, oldVal, newVal) {
-        logCustomElementState(this, `Attribute ${attrName} has changed from ${oldVal} to ${newVal}`);
+        logCustomElementState(this.constructor.elementName, `Attribute ${attrName} has changed from ${oldVal} to ${newVal}`);
 
         this[attrName + 'AttrChanged'](oldVal, newVal);
     }
