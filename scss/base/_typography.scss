@@ -64,3 +64,7 @@
         @extend %body-3;
     }
 }
+
+.my-select {
+    @extend %body-2;
+}

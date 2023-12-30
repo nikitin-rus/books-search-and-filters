@@ -23,7 +23,7 @@ h6 {
   margin: 0;
 }
 
-.search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-family: "Lato", sans-serif;
   font-size: 20px;
   font-style: normal;
@@ -32,7 +32,7 @@ h6 {
   letter-spacing: 0.25px;
 }
 
-.my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-size: 16px;
   letter-spacing: 1.25px;
 }
@@ -89,21 +89,20 @@ h6 {
   padding: 4px;
 }
 
-.select {
+.my-select {
   display: inline-flex;
   flex-direction: column;
-  min-width: 200px;
+  min-width: 300px;
   max-width: 300px;
   min-height: 48px;
   max-height: 48px;
   position: relative;
 }
-.select__btn {
-  min-height: 48px;
-  max-height: 48px;
+.my-select__button {
+  justify-content: space-between;
 }
-.select__lst {
-  display: flex;
+.my-select__options {
+  display: none;
   flex-direction: column;
   position: absolute;
   top: 56px;
@@ -114,26 +113,26 @@ h6 {
   cursor: pointer;
   overflow: hidden;
 }
-.select__lst:hover {
+.my-select__options:hover {
   border-color: #212121;
 }
-.select__option {
-  padding: 6px 11px;
+.my-select__option {
+  padding: 8px 6px;
   white-space: nowrap;
   user-select: none;
 }
-.select__option p {
+.my-select__option p {
   overflow: hidden;
   pointer-events: none;
 }
-.select__option:hover {
+.my-select__option:hover {
   background-color: #F0F0F0;
 }
-.select[show=false] .select__btn my-icon {
+.my-select_expanded .my-select__button img {
   transform: rotate(180deg);
 }
-.select[show=false] .select__lst {
-  display: none;
+.my-select_expanded .my-select__options {
+  display: flex;
 }
 
 .search-form {

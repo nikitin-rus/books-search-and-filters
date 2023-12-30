@@ -1,51 +1,74 @@
-import { setAttributes } from "../helpers";
-import MySelectOption from "./my-select-option";
+import CustomElementBase from "./base-custom-element";
 
-// TODO: Рефакторинг
-export default class MySelect extends HTMLElement {
-    className = 'select';
+export default class MySelect extends CustomElementBase {
+    static elementName = "my-select";
+    static selectionChangedEvent = new Event("selection-changed");
 
-    connectedCallback() {
-        const options = this.querySelectorAll('select-option');
-        const selectedCnt = this.querySelectorAll('select-option[selected=true]').length;
+    options = [];
+    selectedOptionIndex = 0;
 
-        if (selectedCnt > 1) throw new Error("Cannot choose more than one option.");
-        else if (selectedCnt == 0) options[0].setAttribute("selected", true);
+    constructor() {
+        super(MySelect.elementName);
 
-        this.btn = document.createElement("my-button");
-        this.lst = document.createElement("list");
+        const options = Array.from(this.children);
+        this.selectedOptionIndex = options.findIndex(option => option.hasAttribute('selected'));
 
-        this.classList.add(`${this.className}`);
-        this.btn.classList.add(`${this.className}__btn`, 'button');
-        this.lst.classList.add(`${this.className}__lst`);
-        options.forEach(o => o.classList.add(`${this.className}__option`));
+        const optionsHTML = options.reduce((prev, cur) =>
+            prev + `<div class="${MySelect.elementName}__option">${cur.textContent}</div>`, "");
 
-        setAttributes(this.btn, {
-            body: this.querySelector("[selected]").textContent,
-            src: "icons/chevron-down.svg",
-            theme: 'inverse'
-        });
+        this.innerHTML = `
+            <my-button class="${MySelect.elementName}__button" icon="expand_more"></my-button>
+            <div class="${MySelect.elementName}__options">${optionsHTML}</div>
+        `;
 
-        this.append(this.btn, this.lst);
-        this.lst.append(...options);
-
-        this.close();
-
-        this.addEventListener('click', (e) => this.clickCallback(e));
+        this.buttonNode = this.querySelector(`.${MySelect.elementName}__button`);
+        this.optionsNode = this.querySelector(`.${MySelect.elementName}__options`);
+        this.options = Array.from(this.querySelectorAll(`.${MySelect.elementName}__option`));
     }
 
-    open = () => this.setAttribute('show', true);
-    close = () => this.setAttribute('show', false);
-    isClosed = () => this.getAttribute('show') === 'false';
+    initComponent() {
+        super.initComponent();
 
-    clickCallback(e) {
-        if (this.btn.isEqualNode(e.target)) {
-            this.isClosed() ? this.open() : this.close();
-        }
+        this.setAttribute('selected', this.selectedOptionIndex >= 0 ? this.selectedOptionIndex : 0);
 
-        if (e.target instanceof MySelectOption) {
-            this.close();
-            this.btn.setAttribute("body", e.target.textContent);
-        }
+        document.addEventListener('click', (e) => this.documentClickEventHandler(e));
+        this.optionsNode.addEventListener('click', (e) => this.optionsClickEventHandler(e));
+        this.buttonNode.addEventListener('click', (e) => this.buttonClickEventHandler(e));
     }
+
+    //#region attributeChanged callbacks
+
+    static observedAttributes = ['selected'];
+
+    /**
+     * @param {String | null} oldVal 
+     * @param {String | null} newVal 
+     */
+    selectedAttrChanged(oldVal, newVal) {
+        this.buttonNode.setAttribute('value', this.options[newVal].textContent);
+        this.dispatchEvent(MySelect.selectionChangedEvent);
+    };
+
+    //#endregion
+
+    //#region event handlers
+
+    /** @param {MouseEvent} e */
+    optionsClickEventHandler(e) {
+        if (e.target.classList.contains(`${MySelect.elementName}__option`)) {
+            this.setAttribute('selected', this.options.indexOf(e.target));
+            this.classList.remove(`${MySelect.elementName}_expanded`);
+        };
+    };
+
+    /** @param {MouseEvent} e */
+    buttonClickEventHandler(e) {
+        this.classList.toggle(`${MySelect.elementName}_expanded`);
+        e.stopPropagation();
+    }
+
+    /** @param {MouseEvent} e */
+    documentClickEventHandler = (e) => this.classList.remove(`${MySelect.elementName}_expanded`);
+
+    //#endregion
 }

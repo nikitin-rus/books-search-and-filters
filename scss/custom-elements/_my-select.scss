@@ -1,21 +1,22 @@
 @use "../base/vars";
 
-.select {
+.my-select {
     display: inline-flex;
     flex-direction: column;
-    min-width: 200px;
+
+    min-width: 300px;
     max-width: 300px;
     min-height: 48px;
     max-height: 48px;
+    
     position: relative;
 
-    &__btn {
-        min-height: 48px;
-        max-height: 48px;
+    &__button {
+        justify-content: space-between;
     }
 
-    &__lst {
-        display: flex;
+    &__options {
+        display: none;
         flex-direction: column;
         position: absolute;
         top: 56px;
@@ -32,7 +33,7 @@
     }
 
     &__option {
-        padding: 6px 11px;
+        padding: 8px 6px;
         white-space: nowrap;
         user-select: none;
 
@@ -46,17 +47,15 @@
         }
     }
 
-    $select-selector: &;
+    $element-selector: &;
 
-    &[show='false'] {
-        #{$select-selector}__btn {
-            & my-icon {
-                transform: rotate(180deg);
-            }
+    &_expanded {
+        #{$element-selector}__button img {
+            transform: rotate(180deg);
         }
 
-        #{$select-selector}__lst {
-            display: none;
+        #{$element-selector}__options {
+            display: flex;
         }
     }
 }
