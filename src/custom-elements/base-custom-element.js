@@ -5,11 +5,9 @@ import { logCustomElementState } from "../logging";
 export default class CustomElementBase extends HTMLElement {
     isComponentCreated = false;
 
-    constructor(elementName, innerHTML) {
+    constructor(elementName) {
         super();
-
         this.classList.add(elementName);
-        this.innerHTML = innerHTML;
     }
 
     initComponent() {

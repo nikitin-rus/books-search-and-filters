@@ -11,14 +11,16 @@ export default class SearchForm extends CustomElementBase {
     lastInputTime = 0;
 
     constructor() {
-        super(SearchForm.elementName, `
+        super(SearchForm.elementName);
+
+        this.innerHTML = `
             <input class="${SearchForm.elementName}__input">
             <my-button class="${SearchForm.elementName}__button ${SearchForm.elementName}__button_close"
                 size="small" icon="close"></my-button>
             <my-button class="${SearchForm.elementName}__button ${SearchForm.elementName}__button_search"
                 theme="inverse" icon="search"></my-button>
             <div class="${SearchForm.elementName}__results"></div>
-        `);
+        `;
 
         this.inputNode = this.querySelector('input');
         this.buttonCloseNode = this.querySelector(`.${SearchForm.elementName}__button_close`);

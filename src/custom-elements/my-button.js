@@ -6,10 +6,12 @@ export default class MyButton extends CustomElementBase {
     static elementName = "my-button";
 
     constructor() {
-        super(MyButton.elementName, `
+        super(MyButton.elementName);
+
+        this.innerHTML = `
             <p class=${MyButton.elementName}__text></p>
             <img class="${MyButton.elementName}__img" alt="btn-icon">
-        `);
+        `
 
         this.paragraphNode = this.querySelector('p');
         this.imgNode = this.querySelector('img');
