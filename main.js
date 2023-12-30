@@ -1,22 +1,11 @@
-// TODO: Изменить define: добавлять название элементов по статическому свойсву из конструктора
-
 import MyButton from "./src/custom-elements/my-button";
 import MySelect from "./src/custom-elements/my-select";
-import MySelectOption from "./src/custom-elements/my-select-option";
 import SearchForm from "./src/custom-elements/search-form";
+import { logCustomElementState } from "./src/logging";
 
-const elements = {
-    "my-button": MyButton,
-    "my-select": MySelect,
-    "my-select-option": MySelectOption,
-    "search-form": SearchForm,
-}
+const constructors = [MyButton, MySelect, SearchForm];
 
-// const constructors = [MyButton, MySelect, MySelectOption, SearchForm, SearchFormResults];
-
-for (const key in elements) {
-    if (Object.hasOwnProperty.call(elements, key)) {
-        const constructor = elements[key];
-        customElements.define(key, constructor);
-    }
+for (const ctor of constructors) {
+    customElements.define(ctor.elementName, ctor);
+    customElements.whenDefined(ctor.elementName).then(ctor => logCustomElementState(ctor.elementName, "Defined"));
 }
