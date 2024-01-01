@@ -1,12 +1,13 @@
-// TODO: Переделать все методы для работы с объектом
-
-// const books = {
-//     "Ясунари Кавабата": "Тысячекрылый журавль",
-//     "Ясунари Кавабата": "Танцовщица из Идзу",
-//     "Ясунари Кавабата": "Стон горы",
-// }
-
-const titles = ["Тысячекрылый журавль", "Танцовщица из Идзу", "Стон горы"];
+const books = [
+    {
+        title: "Тысячекрылый журавль",
+        author: "Кавабата Ясунари",
+        format: "Мягкий переплет",
+        publisher: "Пальмира классика",
+        genre: "Классическая проза",
+        categories: ["Художественная литература", "Философия и общество"],
+    }
+];
 
 /**
  * @param {string} title 
@@ -14,11 +15,11 @@ const titles = ["Тысячекрылый журавль", "Танцовщица
  */
 export function getTitlesMatching(title) {
     const ans = [];
-    titles.forEach(item => {
-        if (item.toLowerCase().includes(title.toLowerCase())) {
-            ans.push(item);
+    books.forEach(book => {
+        if (book.title.toLowerCase().includes(title.toLowerCase())) {
+            ans.push(book.title);
         }
-    })
+    });
     return ans;
 }
 
@@ -26,5 +27,5 @@ export function getTitlesMatching(title) {
  * @returns {string[]} array of popular titles
  */
 export function getPopularTitles() {
-    return titles;
+    return Array.from(books.values()).map(book => book.title);
 }
