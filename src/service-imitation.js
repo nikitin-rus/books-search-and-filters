@@ -3,9 +3,33 @@ const books = [
         title: "Тысячекрылый журавль",
         author: "Кавабата Ясунари",
         format: "Мягкий переплет",
-        publisher: "Пальмира классика",
+        publisher: "Neoclassic",
         genre: "Классическая проза",
-        categories: ["Художественная литература", "Философия и общество"],
+        category: "Художественная литература",
+    },
+    {
+        title: "Портрет Дориана Грея",
+        author: "Оскар Уайльд",
+        format: "Мягкий переплет",
+        publisher: "Neoclassic",
+        genre: "Классическая проза",
+        category: "Художественная литература",
+    },
+    {
+        title: "Преступление и наказание",
+        author: "Федор Достоевский",
+        format: "Мягкий переплет",
+        publisher: "Neoclassic",
+        genre: "Классическая проза",
+        category: "Художественная литература",
+    },
+    {
+        title: "Little Women",
+        author: "Луиза Мэй Олкотт",
+        format: "Твердый переплёт",
+        publisher: "АСТ",
+        genre: "Классическая проза на английском",
+        category: "Книги на английском языке",
     }
 ];
 
@@ -22,6 +46,20 @@ export function getTitlesMatching(title) {
     });
     return ans;
 }
+
+// /**
+//  * @param {string} title 
+//  * @returns {object[]} array of matched books
+//  */
+// export function getBooksMatching(title) {
+//     const ans = [];
+//     books.forEach(book => {
+//         if (book.title.toLowerCase().includes(title.toLowerCase())) {
+//             ans.push(book);
+//         }
+//     });
+//     return ans;
+// }
 
 /**
  * @returns {string[]} array of popular titles
