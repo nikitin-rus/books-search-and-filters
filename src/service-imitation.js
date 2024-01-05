@@ -47,19 +47,19 @@ export function getTitlesMatching(title) {
     return ans;
 }
 
-// /**
-//  * @param {string} title 
-//  * @returns {object[]} array of matched books
-//  */
-// export function getBooksMatching(title) {
-//     const ans = [];
-//     books.forEach(book => {
-//         if (book.title.toLowerCase().includes(title.toLowerCase())) {
-//             ans.push(book);
-//         }
-//     });
-//     return ans;
-// }
+/**
+ * @param {string} title 
+ * @returns {object[]} array of matched books
+ */
+export function getBooksMatching(title) {
+    const ans = [];
+    books.forEach(book => {
+        if (book.title.toLowerCase().includes(title.toLowerCase())) {
+            ans.push(book);
+        }
+    });
+    return ans;
+}
 
 /**
  * @returns {string[]} array of popular titles
