@@ -10,7 +10,32 @@
 </head>
 
 <body>
-  <div id="app"></div>
+  <div id="app">
+    <div class="main">
+      <div class="main__search-controls search-controls">
+        <search-form class="search-controls__search-form"></search-form>
+        <my-select class="search-controls__my-select">
+          <div>Сначала популярные</div>
+          <div>Сначала дешевые</div>
+          <div>Сначала дорогие</div>
+          <div>Сначала с макс. скидкой</div>
+        </my-select>
+      </div>
+      <div class="main__results"></div>
+      <div class="main__pagination"></div>
+    </div>
+    <div class="filters-sidebar">
+      <div class="filters-sidebar__cards filters-cards">
+        <filters-card class="filters-cards__card filters-cards__card_category" title="Категория"></filters-card>
+        <filters-card class="filters-cards__card filters-cards__card_genre" title="Жанр"></filters-card>
+        <filters-card class="filters-cards__card filters-cards__card_author" title="Автор"></filters-card>
+        <filters-card class="filters-cards__card filters-cards__card_format" title="Формат"></filters-card>
+        <filters-card class="filters-cards__card filters-cards__card_publisher" title="Издательство"></filters-card>
+      </div>
+      <my-button class="filters-sidebar__my-button" value="Очистить все фильтры" icon="filter_alt_off"
+        theme="inverse"></my-button>
+    </div>
+  </div>
   <script type="module" src="/main.js"></script>
 </body>
 
