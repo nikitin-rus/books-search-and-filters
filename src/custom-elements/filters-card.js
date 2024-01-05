@@ -40,19 +40,33 @@ export default class FiltersCard extends CustomElementBase {
 
     //#region event handlers
 
-    checkboxesCheckEventHandler = (e) => this.dispatchEvent(FiltersCard.selectionChangedEvent); 
+    checkboxesCheckEventHandler = (e) => this.dispatchEvent(FiltersCard.selectionChangedEvent);
 
     //#endregion
 
     /** @param {string} value */
-    static createCheckboxHTML(value) {
+    addCheckbox = (value, count) => this.checkboxes.insertAdjacentHTML("beforeend", FiltersCard.createCheckboxHTML(value, count));
+
+    /** @param {object.<string, number>} valuesToCount */
+    updateCheckboxes = (valuesToCount) => {
+        this.checkboxes.innerHTML = ""; 
+        for (const [value, count] of Object.entries(valuesToCount)) {
+            this.addCheckbox(value, count);
+        }
+    };
+
+    /** @param {string} value */
+    static createCheckboxHTML(value, count) {
         return `
-        <label class="${FiltersCard.elementName}__checkbox">
-            <input class="${FiltersCard.elementName}__checkbox-browser" type="checkbox">
-            <span class="${FiltersCard.elementName}__checkbox-custom">
-                <img class="${FiltersCard.elementName}__checkbox-img" src="${checkIconPath}" alt="check icon"/>
-            </span>
-            <span class="${FiltersCard.elementName}__checkbox-text">${value}</span>
+        <label class="${FiltersCard.elementName}__checkbox checkbox">
+            <input class="checkbox__browser-checkbox" type="checkbox">
+            <div class="checkbox__items-left">
+                <span class="checkbox__custom-checkbox">
+                    <img class="checkbox__img" src="${checkIconPath}" alt="check icon"/>
+                </span>
+                <span class="checkbox__text">${value}</span>
+            </div>
+            <span class="checkbox__count">${count}</span>
         </label>
         `;
     }
