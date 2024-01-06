@@ -16,19 +16,35 @@ for (const ctor of constructors) {
 
 const searchFormNode = document.querySelector('.main__search-form');
 const bookCoversNode = document.querySelector('.main__book-covers');
-const filtersCardsNodes = document.querySelectorAll('.sidebar__filters-cards .filters-card');
+const filtersCardsNode = document.querySelector('.sidebar__filters-cards');
+const filtersCardNodes = filtersCardsNode.querySelectorAll('.sidebar__filters-card');
+
+let books = [];
+
+function updateBookCovers(books) {
+    bookCoversNode.innerHTML = "";
+    books.forEach(book => bookCoversNode.insertAdjacentHTML('beforeend', createBookCoverHTML(book.fileName)));
+}
 
 searchFormNode.addEventListener('search', (e) => {
-    bookCoversNode.innerHTML = "";
+    books = getBooksMatching(e.target.querySelector('input').value);
 
-    const books = getBooksMatching(e.target.querySelector('input').value);
-
-    Array.from(filtersCardsNodes).forEach(filtersCardNode => {
+    Array.from(filtersCardNodes).forEach(filtersCardNode => {
         const propertyName = filtersCardNode.getAttribute('property');
         const counter = Counter.create(books.map(book => book[propertyName]));
-
         filtersCardNode.updateCheckboxes(counter);
     });
+    
+    updateBookCovers(books);
+});
 
-    books.forEach(book => bookCoversNode.insertAdjacentHTML('beforeend', createBookCoverHTML(book.fileName)));
+filtersCardsNode.addEventListener("selection-changed", (e) => {
+    const textNodes = e.target.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
+    const values = Array.from(textNodes).map(textNode => textNode.textContent);
+
+    if (values.length) {
+        updateBookCovers(books.filter(book => values.includes(book[e.target.getAttribute("property")])));
+    } else {
+        updateBookCovers(books);
+    }
 });
