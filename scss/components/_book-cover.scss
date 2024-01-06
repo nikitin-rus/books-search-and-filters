@@ -1,0 +1,21 @@
+@use "../base/vars";
+
+.book-cover {
+    border: 1px solid vars.$color-gray; 
+    border-radius: 5px;
+
+    padding: 24px 0;
+
+    width: 247px;
+    height: 376px;
+
+    &:hover {
+        border-color: vars.$color-black;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}

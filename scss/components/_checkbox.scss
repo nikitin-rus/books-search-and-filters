@@ -1,0 +1,41 @@
+@use "../base/vars";
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__browser-checkbox {
+        display: none;
+    }
+
+    &__custom-checkbox {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        max-width: 24px;
+        min-height: 24px;
+        max-height: 24px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    &__img {
+        opacity: 0;
+        transition: opacity 0.1s linear;
+    }
+
+    &__browser-checkbox:checked+&__items-left &__img {
+        opacity: 1;
+    }
+
+    &__text {
+        margin-left: 8px;
+        user-select: none;
+    }
+
+    &__count {
+        color: vars.$color-gray;
+    }
+}
