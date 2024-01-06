@@ -6,6 +6,7 @@ const books = [
         publisher: "Neoclassic",
         genre: "Классическая проза",
         category: "Художественная литература",
+        fileName: "3001022-1.webp",
     },
     {
         title: "Портрет Дориана Грея",
@@ -14,6 +15,7 @@ const books = [
         publisher: "Neoclassic",
         genre: "Классическая проза",
         category: "Художественная литература",
+        fileName: "2592760-1.webp",
     },
     {
         title: "Преступление и наказание",
@@ -22,6 +24,7 @@ const books = [
         publisher: "Neoclassic",
         genre: "Классическая проза",
         category: "Художественная литература",
+        fileName: "2465295-3.webp",
     },
     {
         title: "Little Women",
@@ -30,6 +33,7 @@ const books = [
         publisher: "АСТ",
         genre: "Классическая проза на английском",
         category: "Книги на английском языке",
+        fileName: "2925075.webp",
     }
 ];
 
