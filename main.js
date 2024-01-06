@@ -17,7 +17,7 @@ for (const ctor of constructors) {
 const searchFormNode = document.querySelector('.main__search-form');
 const bookCoversNode = document.querySelector('.main__book-covers');
 const filtersCardsNode = document.querySelector('.sidebar__filters-cards');
-const filtersCardNodes = filtersCardsNode.querySelectorAll('.sidebar__filters-card');
+const filtersCardsNodes = Array.from(filtersCardsNode.querySelectorAll('.sidebar__filters-card'));
 const clearFiltersButtonNode = document.querySelector('.sidebar__my-button');
 
 let books = [];
@@ -30,7 +30,7 @@ function updateBookCovers(books) {
 searchFormNode.addEventListener('search', (e) => {
     books = getBooksMatching(e.target.querySelector('input').value);
 
-    Array.from(filtersCardNodes).forEach(filtersCardNode => {
+    filtersCardsNodes.forEach(filtersCardNode => {
         const propertyName = filtersCardNode.getAttribute('property');
         const counter = Counter.create(books.map(book => book[propertyName]));
         filtersCardNode.updateCheckboxes(counter);
@@ -39,17 +39,19 @@ searchFormNode.addEventListener('search', (e) => {
     updateBookCovers(books);
 });
 
-// FIXME: Неправильная логика фильтрации: отмеченные чекбоксы в РАЗНЫХ фильтрах неправильно обрабатываются, когда противоречат друг другу
-
 filtersCardsNode.addEventListener("selection-changed", (e) => {
-    const textNodes = e.target.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
-    const values = Array.from(textNodes).map(textNode => textNode.textContent);
+    let displayedBooks = books;
 
-    if (values.length) {
-        updateBookCovers(books.filter(book => values.includes(book[e.target.getAttribute("property")])));
-    } else {
-        updateBookCovers(books);
-    }
+    filtersCardsNodes.forEach(filtersCardNode => {
+        const textNodes = filtersCardNode.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
+        const values = Array.from(textNodes).map(textNode => textNode.textContent);
+
+        if (values.length != 0) {
+            displayedBooks = displayedBooks.filter(book => values.includes(book[filtersCardNode.getAttribute("property")]));
+        }
+    });
+
+    updateBookCovers(displayedBooks);
 });
 
 clearFiltersButtonNode.addEventListener('click', (e) => {
