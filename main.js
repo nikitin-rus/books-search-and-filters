@@ -18,6 +18,7 @@ const searchFormNode = document.querySelector('.main__search-form');
 const bookCoversNode = document.querySelector('.main__book-covers');
 const filtersCardsNode = document.querySelector('.sidebar__filters-cards');
 const filtersCardNodes = filtersCardsNode.querySelectorAll('.sidebar__filters-card');
+const clearFiltersButtonNode = document.querySelector('.sidebar__my-button');
 
 let books = [];
 
@@ -38,6 +39,8 @@ searchFormNode.addEventListener('search', (e) => {
     updateBookCovers(books);
 });
 
+// FIXME: Неправильная логика фильтрации: отмеченные чекбоксы в РАЗНЫХ фильтрах неправильно обрабатываются, когда противоречат друг другу
+
 filtersCardsNode.addEventListener("selection-changed", (e) => {
     const textNodes = e.target.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
     const values = Array.from(textNodes).map(textNode => textNode.textContent);
@@ -47,4 +50,11 @@ filtersCardsNode.addEventListener("selection-changed", (e) => {
     } else {
         updateBookCovers(books);
     }
+});
+
+clearFiltersButtonNode.addEventListener('click', (e) => {
+    const checkedCheckboxes = Array.from(filtersCardsNode.querySelectorAll('.checkbox__browser-checkbox:checked'));
+    checkedCheckboxes.forEach(checkbox => checkbox.checked = false);
+
+    updateBookCovers(books);
 });
