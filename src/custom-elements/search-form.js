@@ -135,10 +135,7 @@ export default class SearchForm extends CustomElementBase {
     resultsClickEventHandler(e) {
         if (e.target.classList.contains(`${SearchForm.elementName}__results-row`)) {
             logCustomElementState(SearchForm.elementName, `Dispatching search event with result value '${e.target.textContent}'`);
-
             this.setAttribute('value', e.target.textContent);
-
-            this.dispatchEvent(SearchForm.searchEvent);
         }
     };
 
