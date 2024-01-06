@@ -1,5 +1,5 @@
+import { createCheckboxHTML } from "../components/checkbox";
 import CustomElementBase from "./base-custom-element";
-import checkIconPath from "/check/check_black_18dp.svg";
 
 export default class FiltersCard extends CustomElementBase {
     static elementName = "filters-card";
@@ -45,7 +45,7 @@ export default class FiltersCard extends CustomElementBase {
     //#endregion
 
     /** @param {string} value */
-    addCheckbox = (value, count) => this.checkboxes.insertAdjacentHTML("beforeend", FiltersCard.createCheckboxHTML(value, count));
+    addCheckbox = (value, count) => this.checkboxes.insertAdjacentHTML("beforeend", createCheckboxHTML(value, count));
 
     /** @param {object.<string, number>} valuesToCount */
     updateCheckboxes = (valuesToCount) => {
@@ -54,20 +54,4 @@ export default class FiltersCard extends CustomElementBase {
             this.addCheckbox(value, count);
         }
     };
-
-    /** @param {string} value */
-    static createCheckboxHTML(value, count) {
-        return `
-        <label class="${FiltersCard.elementName}__checkbox checkbox">
-            <input class="checkbox__browser-checkbox" type="checkbox">
-            <div class="checkbox__items-left">
-                <span class="checkbox__custom-checkbox">
-                    <img class="checkbox__img" src="${checkIconPath}" alt="check icon"/>
-                </span>
-                <span class="checkbox__text">${value}</span>
-            </div>
-            <span class="checkbox__count">${count}</span>
-        </label>
-        `;
-    }
 }

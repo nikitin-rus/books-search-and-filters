@@ -82,8 +82,14 @@
     &__title {
         @extend %heading-1;
     }
+}
 
-    &__checkbox {
+.checkbox {
+    &__text {
         @extend %body-1;
+    }
+
+    &__count {
+        @extend %body-2;
     }
 }
