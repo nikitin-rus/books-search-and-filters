@@ -1,18 +1,6 @@
-import FiltersCard from "./src/custom-elements/filters-card";
-import MyButton from "./src/custom-elements/my-button";
-import MySelect from "./src/custom-elements/my-select";
-import SearchForm from "./src/custom-elements/search-form";
-import { logCustomElementState } from "./src/logging";
 import { getBooksMatching } from "./src/service-imitation";
 import { Counter } from "./src/counter";
 import { createBookCoverHTML } from "./src/components/book-cover";
-
-const constructors = [MyButton, MySelect, SearchForm, FiltersCard];
-
-for (const ctor of constructors) {
-    customElements.define(ctor.elementName, ctor);
-    customElements.whenDefined(ctor.elementName).then(ctor => logCustomElementState(ctor.elementName, "Defined"));
-}
 
 const searchFormNode = document.querySelector('.main__search-form');
 const bookCoversNode = document.querySelector('.main__book-covers');
@@ -35,7 +23,7 @@ searchFormNode.addEventListener('search', (e) => {
         const counter = Counter.create(books.map(book => book[propertyName]));
         filtersCardNode.updateCheckboxes(counter);
     });
-    
+
     updateBookCovers(books);
 });
 
