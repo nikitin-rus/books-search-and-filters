@@ -279,6 +279,12 @@ h5 {
 .main__controls {
   margin-bottom: 48px;
 }
+.main__no-results-message[is-hidden=true] {
+  display: none;
+}
+.main__my-select[is-hidden=true] {
+  display: none;
+}
 .main__search-form {
   margin-right: 40px;
 }
@@ -301,7 +307,7 @@ h5 {
   row-gap: 32px;
   margin-bottom: 40px;
 }
-.sidebar_hidden {
+.sidebar[is-hidden=true] {
   display: none;
 }
 

@@ -11,7 +11,7 @@
         margin-bottom: 40px;
     }
 
-    &_hidden {
+    &[is-hidden="true"] {
         display: none;
     }
 }

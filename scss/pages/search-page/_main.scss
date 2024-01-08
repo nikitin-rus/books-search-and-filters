@@ -3,6 +3,14 @@
         margin-bottom: 48px;
     }
 
+    &__no-results-message[is-hidden="true"] {
+        display: none;
+    }
+
+    &__my-select[is-hidden="true"] {
+        display: none;
+    }
+
     &__search-form {
         margin-right: 40px;
     }
