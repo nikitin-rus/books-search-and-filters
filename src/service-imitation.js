@@ -128,6 +128,8 @@ export function getTitlesMatching(title) {
  * @returns {object[]} array of matched books
  */
 export function getBooksMatching(title) {
+    if (!title.length) return [];
+
     const ans = [];
     books.forEach(book => {
         if (book.title.toLowerCase().includes(title.toLowerCase())) {
@@ -141,5 +143,5 @@ export function getBooksMatching(title) {
  * @returns {string[]} array of popular titles
  */
 export function getPopularTitles() {
-    return Array.from(books.values()).map(book => book.title);
+    return ["Ведьмак"];
 }

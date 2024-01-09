@@ -107,7 +107,13 @@ export default class SearchForm extends CustomElementBase {
     btnCloseClickEventHandler = (e) => this.setAttribute("value", "");
 
     /** @param {MouseEvent} e */
-    btnSearchClickEventHandler = (e) => { this.dispatchEvent(SearchForm.searchEvent) };
+    btnSearchClickEventHandler = (e) => {
+        if (!this.inputNode.value) {
+            console.log("Введите название книги!");
+        } else {
+            this.dispatchEvent(SearchForm.searchEvent);
+        }
+    };
 
     /** @param {MouseEvent} */
     inputClickEventHandler(e) {
