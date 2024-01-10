@@ -122,6 +122,7 @@ h5 {
   min-height: 48px;
   max-height: 48px;
   position: relative;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
 .my-select__button {
   justify-content: space-between;
@@ -135,6 +136,7 @@ h5 {
   right: 0;
   border: 1px solid #676767;
   background-color: #FFFFFF;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
@@ -143,7 +145,7 @@ h5 {
   border-color: #212121;
 }
 .my-select__option {
-  padding: 8px 6px;
+  padding: 12px;
   white-space: nowrap;
   user-select: none;
 }
@@ -167,6 +169,7 @@ h5 {
   min-width: 200px;
   min-height: 48px;
   max-height: 48px;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
 .search-form__input {
   display: flex;
@@ -188,9 +191,9 @@ h5 {
   position: absolute;
   z-index: 999;
   top: 56px;
-  background-color: #FFFFFF;
   left: 0;
   right: 0;
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
 .search-form__results-section {
   display: flex;
@@ -198,6 +201,7 @@ h5 {
   padding: 12px 0;
   border: 1px solid #212121;
   border-radius: 5px;
+  background-color: #FFFFFF;
 }
 .search-form__results-title {
   padding: 0 12px;
@@ -306,6 +310,12 @@ h5 {
   width: 100%;
   row-gap: 32px;
   margin-bottom: 40px;
+}
+.sidebar__filters-card {
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
+}
+.sidebar__my-button {
+  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
 .sidebar[is-hidden=true] {
   display: none;

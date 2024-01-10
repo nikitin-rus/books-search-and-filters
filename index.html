@@ -18,20 +18,18 @@
     <div class="main">
       <div class="main__controls">
         <search-form class="main__search-form" placeholder="Название книги"></search-form>
-        <my-select class="main__my-select">
-          <div>Сначала популярные</div>
-          <div>Сначала дешевые</div>
-          <div>Сначала дорогие</div>
-          <div>Сначала с макс. скидкой</div>
+        <my-select class="main__my-select" is-hidden="true">
+          <div>По новизне</div>
+          <div>По названию серии</div>
         </my-select>
       </div>
       <div class="main__book-covers"></div>
       <div class="main__pagination"></div>
-      <div class="main__no-results-message">
+      <div class="main__no-results-message" is-hidden="true">
         <h3>Ничего не найдено!</h3>
       </div>
     </div>
-    <div class="sidebar">
+    <div class="sidebar" is-hidden="true">
       <div class="sidebar__filters-cards">
         <filters-card class="sidebar__filters-card" title="Категория" property="category"></filters-card>
         <filters-card class="sidebar__filters-card" title="Автор" property="author"></filters-card>

@@ -11,6 +11,8 @@
     
     position: relative;
 
+    box-shadow: vars.$box-shadow;
+
     &__button {
         justify-content: space-between;
     }
@@ -24,6 +26,7 @@
         right: 0;
         border: 1px solid vars.$color-gray;
         background-color: #FFFFFF;
+        box-shadow: vars.$box-shadow;
         border-radius: 5px;
         cursor: pointer;
         overflow: hidden;
@@ -34,7 +37,7 @@
     }
 
     &__option {
-        padding: 8px 6px;
+        padding: 12px;
         white-space: nowrap;
         user-select: none;
 

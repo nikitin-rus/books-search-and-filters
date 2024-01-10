@@ -25,6 +25,8 @@ $results-small-top-indent: $small-input-height + 8px;
     min-height: $default-input-height;
     max-height: $default-input-height;
 
+    box-shadow: vars.$box-shadow;
+
     &__input {
         display: flex;
         flex-direction: column;
@@ -51,9 +53,10 @@ $results-small-top-indent: $small-input-height + 8px;
         position: absolute;
         z-index: 999;
         top: $results-default-top-indent;
-        background-color: #FFFFFF;
         left: 0;
         right: 0;
+        
+        box-shadow: vars.$box-shadow;
 
         &-section {
             display: flex;
@@ -61,6 +64,7 @@ $results-small-top-indent: $small-input-height + 8px;
             padding: 12px 0;
             border: 1px solid vars.$color-black;
             border-radius: 5px;
+            background-color: #FFFFFF;
         }
 
         &-title {

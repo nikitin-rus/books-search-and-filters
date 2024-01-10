@@ -18,12 +18,6 @@ function updateBookCovers(books) {
     books.forEach(book => bookCoversContainer.insertAdjacentHTML('beforeend', createBookCoverHTML(book.fileName)));
 }
 
-window.addEventListener('load', () => {
-    noResultsMessage.setAttribute('is-hidden', true);
-    mySelectNode.setAttribute('is-hidden', true);
-    sidebar.setAttribute('is-hidden', true);
-});
-
 searchFormNode.addEventListener('search', (e) => {
     books = getBooksMatching(e.target.querySelector('input').value);
 
