@@ -3,9 +3,7 @@ import CustomElementBase from "./base-custom-element";
 
 export default class FiltersCard extends CustomElementBase {
     static elementName = "filters-card";
-    static selectionChangedEvent = new Event("selection-changed", {
-        bubbles: true,
-    });
+    static selectionChangedEvent = new Event("selection-changed");
 
     constructor() {
         super(FiltersCard.elementName);

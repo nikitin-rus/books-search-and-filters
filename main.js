@@ -11,24 +11,32 @@ const clearFiltersButtonNode = document.querySelector('.sidebar__my-button');
 const searchFormNode = document.querySelector('.main__search-form');
 const noResultsMessage = document.querySelector('.main__no-results-message');
 
-let books = [];
+let covers = [];
 
-function updateBookCovers(books) {
+function updateBookCovers(covers) {
     bookCoversContainer.innerHTML = "";
-    books.forEach(book => bookCoversContainer.insertAdjacentHTML('beforeend', createBookCoverHTML(book.fileName)));
+
+    covers.forEach(cover => {
+        if (cover.displayed) {
+            bookCoversContainer.insertAdjacentHTML('beforeend', createBookCoverHTML(cover.props.fileName));
+        }
+    });
 }
 
 searchFormNode.addEventListener('search', (e) => {
-    books = getBooksMatching(e.target.querySelector('input').value);
+    const books = getBooksMatching(e.target.querySelector('input').value);
+
+    covers = books.map(book => { return { props: book, displayed: true } });
+    console.log(covers);
 
     filtersCardsNodes.forEach(filtersCardNode => {
         const propertyName = filtersCardNode.getAttribute('property');
-        const counter = Counter.create(books.map(book => book[propertyName]));
+        const counter = Counter.create(covers.map(cover => cover.props[propertyName]));
         filtersCardNode.updateCheckboxes(counter);
     });
 
-    sortByYear(books);
-    updateBookCovers(books);
+    sortByYear(covers);
+    updateBookCovers(covers);
 
     const booksEmpty = !books.length;
 
@@ -44,38 +52,59 @@ mySelectNode.addEventListener('selection-changed', (e) => {
 
     switch (value) {
         case "year":
-            sortByYear(books);
+            sortByYear(covers);
             break;
         case "series":
-            sortBySeries(books);
+            sortBySeries(covers);
             break;
         default:
             return;
     }
-    updateBookCovers(books);
+    
+    updateBookCovers(covers);
 });
 
-const sortByYear = (books) => books.sort((a, b) => a.yearPublished - b.yearPublished);
-const sortBySeries = (books) => books.sort((a, b) => a.series.localeCompare(b.series));
+const sortByYear = (covers) => covers.sort((a, b) => a.props.yearPublished - b.props.yearPublished);
+const sortBySeries = (covers) => covers.sort((a, b) => a.props.series.localeCompare(b.props.series));
 
-filtersCardsContainer.addEventListener("selection-changed", (e) => {
-    let displayedBooks = books;
+document.querySelectorAll(".filters-card").forEach(card => {
+    card.addEventListener("selection-changed", (e) => {
 
-    filtersCardsNodes.forEach(filtersCardNode => {
-        const textNodes = filtersCardNode.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
-        const values = Array.from(textNodes).map(textNode => textNode.textContent);
+        // 1. Создать объект поле - массив выбранных значений
 
-        if (values.length != 0) {
-            displayedBooks = displayedBooks.filter(book => values.includes(book[filtersCardNode.getAttribute("property")]));
-        }
+        let conditions = {};
+        document.querySelectorAll('.filters-card').forEach(card => {
+            const propertyName = card.getAttribute("property");
+            const textNodes = card.querySelectorAll('.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text');
+            const values = Array.from(textNodes).map(textNode => textNode.textContent);
+            conditions[propertyName] = values;
+            console.log(conditions);
+        });
+
+        // 2. Отображать только те книги, которые отвечают всем условиям
+
+        covers.forEach(cover => {
+            for (const prop in cover.props) {
+                if (!conditions[prop]) continue; // Если свойство не фильтруется
+                if (!conditions[prop].length) continue; // Если для свойства нет условий (ничего не выбрано в соот. карточке фильтров)
+                if (!conditions[prop].includes(cover.props[prop])) {
+                    cover.displayed = false;
+                    return; // Выход из внешнего цикла
+                }
+            }
+            cover.displayed = true;
+        });
+
+        updateBookCovers(covers);
     });
-
-    updateBookCovers(displayedBooks);
 });
 
 clearFiltersButtonNode.addEventListener('click', (e) => {
     const checkedCheckboxes = Array.from(filtersCardsContainer.querySelectorAll('.checkbox__browser-checkbox:checked'));
     checkedCheckboxes.forEach(checkbox => checkbox.checked = false);
+    covers.forEach(cover => {
+        cover.displayed = true;
+    });
 
-    updateBookCovers(books);
+    updateBookCovers(covers);
 });
