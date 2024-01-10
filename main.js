@@ -27,6 +27,7 @@ searchFormNode.addEventListener('search', (e) => {
         filtersCardNode.updateCheckboxes(counter);
     });
 
+    sortByYear(books);
     updateBookCovers(books);
 
     const booksEmpty = !books.length;
@@ -35,6 +36,27 @@ searchFormNode.addEventListener('search', (e) => {
     mySelectNode.setAttribute('is-hidden', booksEmpty);
     sidebar.setAttribute('is-hidden', booksEmpty);
 });
+
+// TODO: Придумать, как избежать перезагрузку уже отображенных элементов.
+mySelectNode.addEventListener('selection-changed', (e) => {
+    const selectedOptionIndex = e.target.getAttribute("selected");
+    const value = e.target.options[selectedOptionIndex].getAttribute("value");
+
+    switch (value) {
+        case "year":
+            sortByYear(books);
+            break;
+        case "series":
+            sortBySeries(books);
+            break;
+        default:
+            return;
+    }
+    updateBookCovers(books);
+});
+
+const sortByYear = (books) => books.sort((a, b) => a.yearPublished - b.yearPublished);
+const sortBySeries = (books) => books.sort((a, b) => a.series.localeCompare(b.series));
 
 filtersCardsContainer.addEventListener("selection-changed", (e) => {
     let displayedBooks = books;

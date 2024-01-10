@@ -5,16 +5,16 @@ export default class MySelect extends CustomElementBase {
     static selectionChangedEvent = new Event("selection-changed");
 
     options = [];
-    selectedOptionIndex = 0;
 
     constructor() {
         super(MySelect.elementName);
 
         const options = Array.from(this.children);
-        this.selectedOptionIndex = options.findIndex(option => option.hasAttribute('selected'));
 
         const optionsHTML = options.reduce((prev, cur) =>
-            prev + `<div class="${MySelect.elementName}__option">${cur.textContent}</div>`, "");
+            prev + `<div class="${MySelect.elementName}__option" value="${cur.getAttribute("value")}">
+                ${cur.textContent}
+            </div>`, "");
 
         this.innerHTML = `
             <my-button class="${MySelect.elementName}__button" icon="expand_more"></my-button>
