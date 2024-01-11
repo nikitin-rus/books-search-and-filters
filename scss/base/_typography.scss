@@ -121,3 +121,13 @@ h5 {
         @extend %body-2;
     }
 }
+
+.book-card {
+    &__title {
+        @extend %body-1;
+    }
+
+    &__author {
+        @extend %body-2;
+    }
+}

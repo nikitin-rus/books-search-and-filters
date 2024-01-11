@@ -48,7 +48,7 @@ h5 {
   line-height: normal;
 }
 
-.checkbox__text, .filters-card__title, .search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.book-card__title, .checkbox__text, .filters-card__title, .search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .book-card__author, .checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
@@ -57,7 +57,7 @@ h5 {
   letter-spacing: 0.25px;
 }
 
-.checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.book-card__author, .checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-size: 16px;
   letter-spacing: 1.25px;
 }
@@ -292,7 +292,7 @@ h5 {
 .main__search-form {
   margin-right: 40px;
 }
-.main__book-covers {
+.main__book-cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   row-gap: 32px;
@@ -321,7 +321,28 @@ h5 {
   display: none;
 }
 
+.book-card {
+  display: flex;
+  flex-direction: column;
+}
+.book-card__cover {
+  margin-bottom: 12px;
+}
+.book-card__title {
+  margin-bottom: 6px;
+}
+.book-card__title, .book-card__author {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .book-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid #676767;
   border-radius: 5px;
   padding: 24px 16px;
@@ -330,8 +351,8 @@ h5 {
   border-color: #212121;
 }
 .book-cover__img {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 280px;
   object-fit: contain;
 }
 

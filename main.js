@@ -1,10 +1,10 @@
 import { getBooksMatching } from "./src/service-imitation";
 import { Counter } from "./src/counter";
-import { createBookCoverHTML } from "./src/components/book-cover";
+import { createBookCardHTML } from "./src/components/book-card";
 
 const sidebar = document.querySelector('.sidebar');
 const mySelectNode = document.querySelector('.main__my-select');
-const bookCoversContainer = document.querySelector('.main__book-covers');
+const bookCardsContainer = document.querySelector('.main__book-cards');
 const filtersCardsContainer = document.querySelector('.sidebar__filters-cards');
 const filtersCardsNodes = Array.from(filtersCardsContainer.querySelectorAll('.sidebar__filters-card'));
 const clearFiltersButtonNode = document.querySelector('.sidebar__my-button');
@@ -13,12 +13,12 @@ const noResultsMessage = document.querySelector('.main__no-results-message');
 
 let covers = [];
 
-function updateBookCovers(covers) {
-    bookCoversContainer.innerHTML = "";
+function updateBookCards(covers) {
+    bookCardsContainer.innerHTML = "";
 
     covers.forEach(cover => {
         if (cover.displayed) {
-            bookCoversContainer.insertAdjacentHTML('beforeend', createBookCoverHTML(cover.props.fileName));
+            bookCardsContainer.insertAdjacentHTML('beforeend', createBookCardHTML(cover.props));
         }
     });
 }
@@ -36,7 +36,7 @@ searchFormNode.addEventListener('search', (e) => {
     });
 
     sortByYear(covers);
-    updateBookCovers(covers);
+    updateBookCards(covers);
 
     const booksEmpty = !books.length;
 
@@ -61,7 +61,7 @@ mySelectNode.addEventListener('selection-changed', (e) => {
             return;
     }
     
-    updateBookCovers(covers);
+    updateBookCards(covers);
 });
 
 const sortByYear = (covers) => covers.sort((a, b) => a.props.yearPublished - b.props.yearPublished);
@@ -95,7 +95,7 @@ document.querySelectorAll(".filters-card").forEach(card => {
             cover.displayed = true;
         });
 
-        updateBookCovers(covers);
+        updateBookCards(covers);
     });
 });
 
@@ -106,5 +106,5 @@ clearFiltersButtonNode.addEventListener('click', (e) => {
         cover.displayed = true;
     });
 
-    updateBookCovers(covers);
+    updateBookCards(covers);
 });
