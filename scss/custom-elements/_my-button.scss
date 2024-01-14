@@ -33,6 +33,7 @@ $button-square-small-size: $button-small-height;
     }
 
     &__text {
+        pointer-events: none;
         max-width: 100%;
         overflow: hidden;
     }

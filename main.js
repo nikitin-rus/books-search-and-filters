@@ -108,3 +108,12 @@ clearFiltersButtonNode.addEventListener('click', (e) => {
 
     updateBookCards(covers);
 });
+
+document.querySelector('.my-pagination').addEventListener('chose', (e) => {
+    choseEventHandler(e);
+});
+
+/** @param {CustomEvent} e */
+function choseEventHandler(e) {
+    console.log(e.detail);
+}

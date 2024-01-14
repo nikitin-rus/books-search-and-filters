@@ -48,7 +48,7 @@ h5 {
   line-height: normal;
 }
 
-.book-card__title, .checkbox__text, .filters-card__title, .search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .book-card__author, .checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.book-card__title, .checkbox__text, .filters-card__title, .search-form__results-row, .search-form__results-title, .search-form__input, .my-button[size=small], .book-card__author, .checkbox__count, .my-pagination__ellipsis, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
@@ -57,7 +57,7 @@ h5 {
   letter-spacing: 0.25px;
 }
 
-.book-card__author, .checkbox__count, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
+.book-card__author, .checkbox__count, .my-pagination__ellipsis, .my-select, .my-button, .search-form[size=small] .search-form__results-row, .search-form[size=small] .search-form__results-title, .search-form[size=small] .search-form__input {
   font-size: 16px;
   letter-spacing: 1.25px;
 }
@@ -93,6 +93,7 @@ h5 {
   opacity: 0.75;
 }
 .my-button__text {
+  pointer-events: none;
   max-width: 100%;
   overflow: hidden;
 }
@@ -271,6 +272,42 @@ h5 {
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+}
+
+.my-pagination {
+  display: flex;
+  column-gap: 16px;
+}
+.my-pagination__ellipsis {
+  align-self: flex-end;
+}
+.my-pagination__ellipsis[is-hidden=true] {
+  display: none;
+}
+.my-pagination__my-button_navigate {
+  border: 0;
+}
+.my-pagination__my-button_navigate:hover {
+  background-color: #F0F0F0;
+}
+.my-pagination__my-button_navigate-left {
+  transform: rotate(90deg);
+}
+.my-pagination__my-button_navigate-right {
+  transform: rotate(-90deg);
+}
+.my-pagination__my-button_change-page {
+  min-width: 0;
+}
+.my-pagination__my-buttons {
+  display: flex;
+  column-gap: 16px;
+}
+.my-pagination[type=empty] .my-pagination__my-buttons {
+  display: none;
+}
+.my-pagination[type=small] .my-pagination__ellipsis {
+  display: none;
 }
 
 #main-page {

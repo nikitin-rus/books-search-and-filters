@@ -1,0 +1,55 @@
+@use '../base/vars';
+
+.my-pagination {
+    display: flex;
+    column-gap: 16px;
+
+    &__ellipsis {
+        align-self: flex-end;
+
+        &[is-hidden="true"] {
+            display: none;
+        }
+    }
+
+    &__my-button {
+        &_navigate {
+            border: 0;
+
+            &:hover {
+                background-color: vars.$color-hover-row-gray;
+            }
+        }
+
+        &_navigate-left {
+            transform: rotate(90deg);
+        }
+
+        &_navigate-right {
+            transform: rotate(-90deg);
+        }
+
+        &_change-page {
+            min-width: 0;
+        }
+    }
+
+    &__my-buttons {
+        display: flex;
+        column-gap: 16px;
+    }
+
+    $element-selector: &;
+
+    &[type="empty"] {
+        #{$element-selector}__my-buttons {
+            display: none;
+        }
+    }
+
+    &[type="small"] {
+        #{$element-selector}__ellipsis {
+            display: none;
+        }
+    }
+}

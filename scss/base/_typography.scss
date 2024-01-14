@@ -112,6 +112,12 @@ h5 {
     }
 }
 
+.my-pagination {
+    &__ellipsis {
+        @extend %body-2;
+    }
+}
+
 .checkbox {
     &__text {
         @extend %body-1;

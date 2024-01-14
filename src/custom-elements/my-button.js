@@ -65,9 +65,12 @@ export default class MyButton extends CustomElementBase {
         const size = elementSizeToIconDp[this.getAttribute('size') ?? 'default'] ?? elementSizeToIconDp.default;
 
         const src = `/${iconName}/${iconName}_${color}_${size}dp.svg`;
-        logCustomElementState(MyButton.elementName, `Changed icon src from ${this.imgNode.src} to ${src}`);
 
-        this.imgNode.src = src;
+        if (iconName) {
+            logCustomElementState(MyButton.elementName, `Changing icon src from ${this.imgNode.src} to ${src}`);
+            this.imgNode.src = src;
+        }
+
         this.imgNode.hidden = !iconName;
     }
 }
