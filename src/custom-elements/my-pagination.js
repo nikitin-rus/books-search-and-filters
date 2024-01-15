@@ -137,6 +137,10 @@ export default class MyPagination extends CustomElementBase {
                 btns[i].setAttribute("is-hidden", true);
             }
         }
+
+        for (let i = 0; i < btns.length - 1; i++) {
+            btns[i].setAttribute('value', i + 1);
+        }
         btns[4].setAttribute('value', cnt);
     }
 
