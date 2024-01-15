@@ -6,6 +6,7 @@
 
     &__ellipsis {
         align-self: flex-end;
+        user-select: none;
 
         &[is-hidden="true"] {
             display: none;
@@ -32,6 +33,15 @@
         &_change-page {
             min-width: 0;
         }
+
+        &[is-hidden="true"] {
+            display: none;
+        }
+    }
+
+    &__movable-buttons {
+        display: flex;
+        column-gap: 16px;
     }
 
     &__my-buttons {
@@ -41,14 +51,20 @@
 
     $element-selector: &;
 
-    &[type="empty"] {
-        #{$element-selector}__my-buttons {
+    &[type="small"] {
+        #{$element-selector}__ellipsis {
             display: none;
         }
     }
 
-    &[type="small"] {
-        #{$element-selector}__ellipsis {
+    &[state="start"] {
+        #{$element-selector}__ellipsis_left {
+            display: none;
+        }
+    }
+
+    &[state="end"] {
+        #{$element-selector}__ellipsis_right {
             display: none;
         }
     }

@@ -280,6 +280,7 @@ h5 {
 }
 .my-pagination__ellipsis {
   align-self: flex-end;
+  user-select: none;
 }
 .my-pagination__ellipsis[is-hidden=true] {
   display: none;
@@ -299,14 +300,24 @@ h5 {
 .my-pagination__my-button_change-page {
   min-width: 0;
 }
+.my-pagination__my-button[is-hidden=true] {
+  display: none;
+}
+.my-pagination__movable-buttons {
+  display: flex;
+  column-gap: 16px;
+}
 .my-pagination__my-buttons {
   display: flex;
   column-gap: 16px;
 }
-.my-pagination[type=empty] .my-pagination__my-buttons {
+.my-pagination[type=small] .my-pagination__ellipsis {
   display: none;
 }
-.my-pagination[type=small] .my-pagination__ellipsis {
+.my-pagination[state=start] .my-pagination__ellipsis_left {
+  display: none;
+}
+.my-pagination[state=end] .my-pagination__ellipsis_right {
   display: none;
 }
 

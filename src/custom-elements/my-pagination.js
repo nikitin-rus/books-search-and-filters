@@ -10,7 +10,8 @@ export default class MyPagination extends CustomElementBase {
 
         let buttonsHTML = "";
         for (let n = 2; n <= 4; n++) {
-            buttonsHTML += MyPagination.createMyButtonHTML(n);
+            buttonsHTML += MyPagination.createMyButtonHTML(n,
+                `${MyPagination.elementName}__my-button_movable`);
         }
 
         this.innerHTML = `
@@ -22,7 +23,7 @@ export default class MyPagination extends CustomElementBase {
                 ${MyPagination.createMyButtonHTML(1, `${MyPagination.elementName}__my-button_edge-left`)}
                 ${MyPagination.createEllipsisHTML(`${MyPagination.elementName}__ellipsis_left`)} 
                 
-                ${buttonsHTML}
+                <span class="${MyPagination.elementName}__movable-buttons">${buttonsHTML}</span>
                 
                 ${MyPagination.createEllipsisHTML(`${MyPagination.elementName}__ellipsis_right`)}
                 ${MyPagination.createMyButtonHTML(5, `${MyPagination.elementName}__my-button_edge-right`)}
@@ -41,12 +42,27 @@ export default class MyPagination extends CustomElementBase {
             this.choseEventHandler(e);
         });
 
-        const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_change-page`);
-        btns.forEach(btn => {
+        this.querySelectorAll(`.${MyPagination.elementName}__my-button_change-page`).forEach(btn => {
             btn.addEventListener('click', (e) => {
                 this.changePageEventHandler(e);
             });
         });
+
+        this.querySelectorAll(`.${MyPagination.elementName}__my-button_navigate`).forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.navigateEventHandler(e);
+            })
+        });
+
+        this.querySelector(`.${MyPagination.elementName}__my-button_edge-left`)
+            .addEventListener('click', (e) => {
+                this.toFirstPageEventHandler(e);
+            });
+
+        this.querySelector(`.${MyPagination.elementName}__my-button_edge-right`)
+            .addEventListener('click', (e) => {
+                this.toLastPageEventHandler(e);
+            });
     }
 
     //#region event handlers
@@ -54,9 +70,41 @@ export default class MyPagination extends CustomElementBase {
     static choseEvent = new CustomEvent("chose");
 
     /** @param {MouseEvent} e */
-    changePageEventHandler = (e) => {
-        const index = +e.target.getAttribute('value') - 1;
-        this.setAttribute('chosen', index);
+    navigateEventHandler = (e) => {
+        const chosen = +this.getAttribute("chosen");
+
+        if (chosen !== 1 &&
+            e.target.classList.contains(`${MyPagination.elementName}__my-button_navigate-left`)) {
+            this.setAttribute("chosen", chosen - 1);
+        } else if (chosen !== +this.getAttribute("pages") &&
+            e.target.classList.contains(`${MyPagination.elementName}__my-button_navigate-right`)) {
+            this.setAttribute("chosen", chosen + 1);
+        }
+    }
+
+    /** @param {MouseEvent} e */
+    changePageEventHandler = (e) => this.setAttribute('chosen', +e.target.getAttribute('value'));
+
+    /** @param {MouseEvent} e */
+    toFirstPageEventHandler = (e) => {
+        const value = +e.target.getAttribute('value');
+        const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_movable`);
+
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].setAttribute('value', i + 2);
+        }
+    }
+
+    /** @param {MouseEvent} e */
+    toLastPageEventHandler = (e) => {
+        const value = +e.target.getAttribute('value');
+        const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_movable`);
+
+        let count = 1;
+        for (let i = btns.length - 1; i >= 0; i--) {
+            btns[i].setAttribute('value', value - count);
+            count++;
+        }
     }
 
     /** @param {CustomEvent} e */
@@ -75,18 +123,21 @@ export default class MyPagination extends CustomElementBase {
      * @param {String | null} newVal 
      */
     pagesAttrChanged = (oldVal, newVal) => {
-        this.setAttribute("chosen", "0");
+        const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_change-page`);
+        const cnt = +newVal;
 
-        // const cnt = +newVal;
-        // let type = '';
-        // if (cnt == 0) type = 'empty';
-        // else if (cnt <= 5) type = 'small';
-        // else type = 'full';
+        btns.forEach(btn => btn.removeAttribute("is-hidden"));
 
-        // this.setAttribute('type', type);
+        this.setAttribute("chosen", "1");
 
-        // const btn = this.querySelector(`.${MyPagination.elementName}__my-button_change-page:last-child`);
-        // btn.setAttribute('value', newVal);
+        this.setAttribute('type', cnt <= 5 ? 'small' : 'full');
+
+        if (cnt >= 0 && cnt < 5) {
+            for (let i = btns.length - 1; i > cnt - 1; i--) {
+                btns[i].setAttribute("is-hidden", true);
+            }
+        }
+        btns[4].setAttribute('value', cnt);
     }
 
     /**
@@ -95,14 +146,38 @@ export default class MyPagination extends CustomElementBase {
      */
     chosenAttrChanged = (oldVal, newVal) => {
         const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_change-page`);
+        const container = this.querySelector(`.${MyPagination.elementName}__movable-buttons`);
 
-        if (oldVal) {
-            btns[oldVal].removeAttribute('theme');
+        const oldChosen = +oldVal;
+        const newChosen = +newVal;
+        const pages = +this.getAttribute('pages');
+
+        btns.forEach(btn => {
+            const value = +btn.getAttribute('value');
+            if (value === oldChosen) btn.removeAttribute('theme');
+            if (value === newChosen) btn.setAttribute('theme', 'inverse');
+        });
+
+        this.setAttribute('state',
+            (1 <= newChosen && newChosen <= 3) ? 'start' :
+                (pages - 2 <= newChosen && newChosen <= pages) ? 'end' :
+                    'middle');
+
+        if (newChosen !== 2 && newChosen !== pages - 1) {
+            const left = btns[1];
+            const right = btns[3];
+
+            if (+left.getAttribute('value') === newChosen) {
+                container.insertBefore(right, left);
+                right.setAttribute('value', newChosen - 1)
+            } else if (+right.getAttribute('value') === newChosen) {
+                container.appendChild(left);
+                left.setAttribute('value', newChosen + 1);
+            }
         }
-        btns[newVal].setAttribute('theme', 'inverse');
 
         this.dispatchEvent(new CustomEvent("chose", {
-            detail: { value: +newVal + 1 }
+            detail: { value: newChosen }
         }));
     }
 
