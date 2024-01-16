@@ -1,6 +1,5 @@
 import { logCustomElementState } from "../logging";
 import CustomElementBase from "./base-custom-element";
-import SearchForm from "./search-form";
 
 export default class MyPagination extends CustomElementBase {
     static elementName = "my-pagination";

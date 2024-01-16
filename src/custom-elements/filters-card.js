@@ -3,7 +3,9 @@ import CustomElementBase from "./base-custom-element";
 
 export default class FiltersCard extends CustomElementBase {
     static elementName = "filters-card";
-    static selectionChangedEvent = new Event("selection-changed");
+    static selectionChangedEvent = new Event("selection-changed", {
+        bubbles: true
+    });
 
     constructor() {
         super(FiltersCard.elementName);
@@ -49,7 +51,7 @@ export default class FiltersCard extends CustomElementBase {
 
     /** @param {object.<string, number>} valuesToCount */
     updateCheckboxes = (valuesToCount) => {
-        this.checkboxes.innerHTML = ""; 
+        this.checkboxes.innerHTML = "";
         for (const [value, count] of Object.entries(valuesToCount)) {
             this.addCheckbox(value, count);
         }
