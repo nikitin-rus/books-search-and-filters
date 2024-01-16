@@ -1,0 +1,79 @@
+@use '../base/vars';
+
+.main-page {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 40px;
+    padding: 88px 120px;
+
+    &__controls {
+        margin-bottom: 48px;
+    }
+
+    &__search-form {
+        margin-right: 40px;
+    }
+
+    &__cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        row-gap: 32px;
+        column-gap: 40px;
+    }
+
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__filters {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 32px;
+        margin-bottom: 40px;
+    }
+
+    &__filters-card {
+        box-shadow: vars.$box-shadow;
+        ;
+    }
+
+    &__my-button {
+        box-shadow: vars.$box-shadow;
+    }
+
+    $element-selector: &;
+
+    &[state="start"] {
+        #{$element-selector} {
+
+            &__my-select,
+            &__sidebar,
+            &__no-results-message,
+            &__pagination {
+                display: none;
+            }
+        }
+    }
+
+    &[state="results"] {
+        #{$element-selector} {
+            &__no-results-message {
+                display: none;
+            }
+        }
+    }
+
+    &[state="error"] {
+        #{$element-selector} {
+
+            &__my-select,
+            &__sidebar,
+            &__pagination {
+                display: none;
+            }
+        }
+    }
+}

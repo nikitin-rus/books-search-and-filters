@@ -321,51 +321,49 @@ h5 {
   display: none;
 }
 
-#main-page {
+.main-page {
   display: grid;
   grid-template-columns: 2fr 1fr;
   column-gap: 40px;
   padding: 88px 120px;
 }
-
-.main__controls {
+.main-page__controls {
   margin-bottom: 48px;
 }
-.main__no-results-message[is-hidden=true] {
-  display: none;
-}
-.main__my-select[is-hidden=true] {
-  display: none;
-}
-.main__search-form {
+.main-page__search-form {
   margin-right: 40px;
 }
-.main__book-cards {
+.main-page__cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   row-gap: 32px;
   column-gap: 40px;
 }
-
-.sidebar {
+.main-page__sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.sidebar__filters-cards {
+.main-page__filters {
   display: flex;
   flex-direction: column;
   width: 100%;
   row-gap: 32px;
   margin-bottom: 40px;
 }
-.sidebar__filters-card {
+.main-page__filters-card {
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
-.sidebar__my-button {
+.main-page__my-button {
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
 }
-.sidebar[is-hidden=true] {
+.main-page[state=start] .main-page__my-select, .main-page[state=start] .main-page__sidebar, .main-page[state=start] .main-page__no-results-message, .main-page[state=start] .main-page__pagination {
+  display: none;
+}
+.main-page[state=results] .main-page__no-results-message {
+  display: none;
+}
+.main-page[state=error] .main-page__my-select, .main-page[state=error] .main-page__sidebar, .main-page[state=error] .main-page__pagination {
   display: none;
 }
 

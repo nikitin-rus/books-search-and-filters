@@ -14,31 +14,31 @@
 </head>
 
 <body>
-  <div id="main-page">
-    <div class="main">
-      <div class="main__controls">
-        <search-form class="main__search-form" placeholder="Название книги"></search-form>
-        <my-select class="main__my-select" is-hidden="true">
+  <div class="main-page" state="start">
+    <div class="main-page__main">
+      <div class="main-page__controls">
+        <search-form class="main-page__search-form" placeholder="Название книги"></search-form>
+        <my-select class="main-page__my-select">
           <div value="year">По новизне</div>
           <div value="series">По названию серии</div>
         </my-select>
       </div>
-      <div class="main__book-cards"></div>
-      <my-pagination class="main__my-pagination" pages="3"></my-pagination>
-      <div class="main__no-results-message" is-hidden="true">
+      <div class="main-page__cards"></div>
+      <my-pagination class="main-page__pagination" pages="3"></my-pagination>
+      <div class="main-page__no-results-message">
         <h3>Ничего не найдено!</h3>
       </div>
     </div>
-    <div class="sidebar" is-hidden="true">
-      <div class="sidebar__filters-cards">
-        <filters-card class="sidebar__filters-card" title="Категория" property="category"></filters-card>
-        <filters-card class="sidebar__filters-card" title="Автор" property="author"></filters-card>
-        <filters-card class="sidebar__filters-card" title="Формат" property="format"></filters-card>
-        <filters-card class="sidebar__filters-card" title="Издательство" property="publisher"></filters-card>
-        <filters-card class="sidebar__filters-card" title="Серия" property="series"></filters-card>
+    <div class="main-page__sidebar">
+      <div class="main-page__filters">
+        <filters-card class="main-page__filters-card" title="Категория" property="category"></filters-card>
+        <filters-card class="main-page__filters-card" title="Автор" property="author"></filters-card>
+        <filters-card class="main-page__filters-card" title="Формат" property="format"></filters-card>
+        <filters-card class="main-page__filters-card" title="Издательство" property="publisher"></filters-card>
+        <filters-card class="main-page__filters-card" title="Серия" property="series"></filters-card>
       </div>
-      <my-button class="sidebar__my-button" value="Очистить все фильтры" icon="filter_alt_off"
-        theme="inverse"></my-button>
+      <my-button class="main-page__my-button main-page__my-button_clear-filters" value="Очистить все фильтры"
+        icon="filter_alt_off" theme="inverse"></my-button>
     </div>
   </div>
   <script type="module" src="/src/define-custom-elements.js"></script>

@@ -2,14 +2,17 @@ import { getBooksMatching } from "./src/service-imitation";
 import { Counter } from "./src/counter";
 import { createBookCardHTML } from "./src/components/book-card";
 
-const sidebar = document.querySelector('.sidebar');
-const mySelectNode = document.querySelector('.main__my-select');
-const bookCardsContainer = document.querySelector('.main__book-cards');
-const filtersCardsContainer = document.querySelector('.sidebar__filters-cards');
-const filtersCardsNodes = Array.from(filtersCardsContainer.querySelectorAll('.sidebar__filters-card'));
-const clearFiltersButtonNode = document.querySelector('.sidebar__my-button');
-const searchFormNode = document.querySelector('.main__search-form');
-const noResultsMessage = document.querySelector('.main__no-results-message');
+const mySelectNode = document.querySelector('.main-page__my-select');
+const bookCardsContainer = document.querySelector('.main-page__cards');
+const filtersCardsContainer = document.querySelector('.main-page__filters');
+const filtersCardsNodes = Array.from(filtersCardsContainer.querySelectorAll('.main-page__filters-card'));
+const clearFiltersButtonNode = document.querySelector('.main-page__my-button');
+const searchFormNode = document.querySelector('.main-page__search-form');
+
+window.onload = (e) => {
+    document.querySelector('.main-page')
+        .setAttribute('state', 'start');
+}
 
 let covers = [];
 
@@ -27,7 +30,6 @@ searchFormNode.addEventListener('search', (e) => {
     const books = getBooksMatching(e.target.querySelector('input').value);
 
     covers = books.map(book => { return { props: book, displayed: true } });
-    console.log(covers);
 
     filtersCardsNodes.forEach(filtersCardNode => {
         const propertyName = filtersCardNode.getAttribute('property');
@@ -38,11 +40,9 @@ searchFormNode.addEventListener('search', (e) => {
     sortByYear(covers);
     updateBookCards(covers);
 
-    const booksEmpty = !books.length;
-
-    noResultsMessage.setAttribute('is-hidden', !booksEmpty);
-    mySelectNode.setAttribute('is-hidden', booksEmpty);
-    sidebar.setAttribute('is-hidden', booksEmpty);
+    document.querySelector('.main-page')
+        .setAttribute('state', books.length ?
+            'results' : 'error');
 });
 
 // TODO: Придумать, как избежать перезагрузку уже отображенных элементов.
@@ -60,7 +60,7 @@ mySelectNode.addEventListener('selection-changed', (e) => {
         default:
             return;
     }
-    
+
     updateBookCards(covers);
 });
 
