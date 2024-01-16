@@ -1,5 +1,5 @@
 import { logCustomElementState } from "../logging";
-import { getTitlesMatching, getPopularTitles } from "../service-imitation";
+import Service from "../service-imitation";
 import CustomElementBase from "./base-custom-element";
 
 export default class SearchForm extends CustomElementBase {
@@ -79,7 +79,7 @@ export default class SearchForm extends CustomElementBase {
             this.resultsNode.innerHTML = "";
 
             this.resultsNode.insertAdjacentHTML('beforeend',
-                SearchForm.createResultsSectionHTML("Популярное", getPopularTitles()));
+                SearchForm.createResultsSectionHTML("Популярное", Service.getPopularTitles()));
 
             this.isSearchResultsShowPopular = true;
         }
@@ -93,7 +93,7 @@ export default class SearchForm extends CustomElementBase {
                     this.resultsNode.innerHTML = "";
 
                     this.resultsNode.insertAdjacentHTML('beforeend',
-                        SearchForm.createResultsSectionHTML("Книги", [e.target.value, ...getTitlesMatching(e.target.value)]));
+                        SearchForm.createResultsSectionHTML("Книги", [e.target.value, ...Service.getTitlesMatching(e.target.value)]));
 
                     this.isSearchResultsShowPopular = false;
                 }
@@ -123,7 +123,7 @@ export default class SearchForm extends CustomElementBase {
             this.resultsNode.innerHTML = "";
 
             this.resultsNode.insertAdjacentHTML('beforeend',
-                SearchForm.createResultsSectionHTML("Популярное", getPopularTitles()));
+                SearchForm.createResultsSectionHTML("Популярное", Service.getPopularTitles()));
 
             this.isSearchResultsShowPopular = true;
         }

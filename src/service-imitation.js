@@ -121,39 +121,40 @@ const books = [
     }
 ];
 
-/**
- * @param {string} title 
- * @returns {string[]} array of matched titles
- */
-export function getTitlesMatching(title) {
-    const ans = [];
-    books.forEach(book => {
-        if (book.title.toLowerCase().includes(title.toLowerCase())) {
-            ans.push(book.title);
-        }
-    });
-    return ans;
+export default class Service {
+    /**
+     * @param {string} title 
+     * @returns {string[]} array of matched titles
+     */
+    static getTitlesMatching(title) {
+        const ans = [];
+        books.forEach(book => {
+            if (book.title.toLowerCase().includes(title.toLowerCase())) {
+                ans.push(book.title);
+            }
+        });
+        return ans;
+    }
+
+    /**
+     * @param {string} title 
+     * @returns {object[]} array of matched books
+     */
+    static getBooksMatching(title) {
+        if (!title.length) return [];
+
+        const ans = [];
+        books.forEach(book => {
+            if (book.title.toLowerCase().includes(title.toLowerCase())) {
+                ans.push(book);
+            }
+        });
+        return ans;
+    }
+
+    /** @returns {string[]} array of popular titles */
+    static getPopularTitles = () => ["Ведьмак"];
 }
 
-/**
- * @param {string} title 
- * @returns {object[]} array of matched books
- */
-export function getBooksMatching(title) {
-    if (!title.length) return [];
 
-    const ans = [];
-    books.forEach(book => {
-        if (book.title.toLowerCase().includes(title.toLowerCase())) {
-            ans.push(book);
-        }
-    });
-    return ans;
-}
 
-/**
- * @returns {string[]} array of popular titles
- */
-export function getPopularTitles() {
-    return ["Ведьмак"];
-}

@@ -1,6 +1,6 @@
-import { getBooksMatching } from "./src/service-imitation";
 import { Counter } from "./src/counter";
 import { createBookCardHTML } from "./src/components/book-card";
+import Service from "./src/service-imitation";
 
 let covers = [];
 
@@ -62,7 +62,7 @@ function loadEventHandler(e) {
 
 /** @param {Event} e */
 function searchEventHandler(e) {
-    covers = getBooksMatching(e.target.querySelector('input').value)
+    covers = Service.getBooksMatching(e.target.querySelector('input').value)
         .map(book => {
             return {
                 props: book,
