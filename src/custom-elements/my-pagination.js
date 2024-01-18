@@ -66,27 +66,39 @@ export default class MyPagination extends CustomElementBase {
 
     //#region event handlers
 
-    static choseEvent = new CustomEvent("chose");
-
     /** @param {MouseEvent} e */
     navigateEventHandler = (e) => {
         const chosen = +this.getAttribute("chosen");
+        let value = chosen;
 
         if (chosen !== 1 &&
             e.target.classList.contains(`${MyPagination.elementName}__my-button_navigate-left`)) {
-            this.setAttribute("chosen", chosen - 1);
+            value -= 1;
         } else if (chosen !== +this.getAttribute("pages") &&
             e.target.classList.contains(`${MyPagination.elementName}__my-button_navigate-right`)) {
-            this.setAttribute("chosen", chosen + 1);
+            value += 1;
         }
+
+        this.setAttribute("chosen", value);
+
+        this.dispatchEvent(new CustomEvent("choose", {
+            detail: { value: value },
+        }));
     }
 
     /** @param {MouseEvent} e */
-    changePageEventHandler = (e) => this.setAttribute('chosen', +e.target.getAttribute('value'));
+    changePageEventHandler = (e) => {
+        const value = +e.target.getAttribute('value');
+
+        this.setAttribute('chosen', value);
+
+        this.dispatchEvent(new CustomEvent("choose", {
+            detail: { value: value },
+        }));
+    }
 
     /** @param {MouseEvent} e */
     toFirstPageEventHandler = (e) => {
-        const value = +e.target.getAttribute('value');
         const btns = this.querySelectorAll(`.${MyPagination.elementName}__my-button_movable`);
 
         for (let i = 0; i < btns.length; i++) {
@@ -107,9 +119,7 @@ export default class MyPagination extends CustomElementBase {
     }
 
     /** @param {CustomEvent} e */
-    choseEventHandler = (e) => {
-        logCustomElementState(MyPagination.elementName, `Dispathed '${MyPagination.choseEvent.type}' event`);
-    }
+    choseEventHandler = (e) => logCustomElementState(MyPagination.elementName, `Dispathed '${e.type}' event`);
 
     //#endregion
 
@@ -178,10 +188,6 @@ export default class MyPagination extends CustomElementBase {
                 left.setAttribute('value', newChosen + 1);
             }
         }
-
-        this.dispatchEvent(new CustomEvent("chose", {
-            detail: { value: newChosen }
-        }));
     }
 
     //#endregion

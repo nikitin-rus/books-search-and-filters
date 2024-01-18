@@ -19,6 +19,7 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
         row-gap: 32px;
         column-gap: 40px;
+        margin-bottom: 80px;
     }
 
     &__sidebar {
@@ -37,11 +38,15 @@
 
     &__filters-card {
         box-shadow: vars.$box-shadow;
-        ;
     }
 
     &__my-button {
         box-shadow: vars.$box-shadow;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: center;
     }
 
     $element-selector: &;

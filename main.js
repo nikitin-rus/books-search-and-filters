@@ -2,32 +2,33 @@ import { Counter } from "./src/counter";
 import { createBookCardHTML } from "./src/components/book-card";
 import Service from "./src/service-imitation";
 
-let covers = [];
+let myFilters = {};
+let myGetBooksFunction;
+let mySortFunction = sortByYear;
 
 //#region Functions
 
-/** @param {object[]} covers */
-function updateBookCards(covers) {
-    const cardsHTML = covers.reduce((result, cover) => {
-        return cover.displayed ?
-            result + createBookCardHTML(cover.props) : result
-    }, "");
+/** @param {object[]} books */
+function updateBookCards(books) {
+    let cardsHTML = "";
+    books.forEach(book => {
+        cardsHTML += createBookCardHTML(book);
+    });
 
     document.querySelector('.main-page__cards').innerHTML = cardsHTML;
 }
 
-/** @param {object[]} covers */
-function sortCoversByYear(covers) {
-    covers.sort((a, b) =>
-        a.props.yearPublished -
-        b.props.yearPublished);
-}
+/** 
+ * @param {object} a 
+ * @param {object} b 
+ */
+function sortByYear(a, b) { return a.yearPublished - b.yearPublished; };
 
-/** @param {object[]} covers */
-function sortCoversBySeries(covers) {
-    covers.sort((a, b) =>
-        a.props.series.localeCompare(b.props.series));
-}
+/** 
+ * @param {object} a 
+ * @param {object} b 
+ */
+function sortBySeries(a, b) { return a.series.localeCompare(b.series); };
 
 //#endregion
 
@@ -42,7 +43,7 @@ document.querySelector('.main-page__my-select')
     .addEventListener('selection-changed', (e) => selectEventHandler(e));
 
 document.querySelector('.main-page__pagination')
-    .addEventListener('chose', (e) => choseEventHandler(e));
+    .addEventListener('choose', (e) => chooseEventHandler(e));
 
 document.querySelector('.main-page__filters')
     .addEventListener('selection-changed', (e) => filtersEventHandler(e));
@@ -62,29 +63,25 @@ function loadEventHandler(e) {
 
 /** @param {Event} e */
 function searchEventHandler(e) {
-    covers = Service.getBooksMatching(e.target.querySelector('input').value)
-        .map(book => {
-            return {
-                props: book,
-                displayed: true
-            }
-        });
+    const input = e.target.querySelector('input').value;
 
-    sortCoversByYear(covers);
+    const { pages, filters, getBooks } = Service.getData(input, 8, mySortFunction, myFilters);
+    myGetBooksFunction = getBooks;
 
-    updateBookCards(covers);
+    const books = getBooks(1);
 
-    document.querySelectorAll('.main-page__filters-card')
-        .forEach(card => {
-            const values = covers.map(cover => {
-                return cover.props[card.getAttribute('property')];
-            });
+    updateBookCards(books);
 
-            card.updateCheckboxes(Counter.create(values));
-        });
+    for (const prop in filters) {
+        document.querySelector(`.filters-card[property=${prop}]`)
+            .updateCheckboxes(Counter.create(filters[prop]));
+    }
+
+    document.querySelector('.main-page__pagination')
+        .setAttribute('pages', pages);
 
     document.querySelector('.main-page')
-        .setAttribute('state', covers.length ?
+        .setAttribute('state', books.length ?
             'results' : 'error');
 }
 
@@ -92,24 +89,30 @@ function searchEventHandler(e) {
 function selectEventHandler(e) {
     const index = e.target.getAttribute('selected');
     const value = e.target.options[index].getAttribute('value');
+    const input = document.querySelector('.main-page__search-form')
+        .getAttribute('value');
 
     switch (value) {
         case 'year':
-            sortCoversByYear(covers);
+            mySortFunction = sortByYear;
             break;
         case 'series':
-            sortCoversBySeries(covers);
+            mySortFunction = sortBySeries;
             break;
         default:
             return;
     }
 
-    updateBookCards(covers);
+    const { getBooks } = Service.getData(input, 8, mySortFunction, myFilters);
+    myGetBooksFunction = getBooks;
+
+    updateBookCards(getBooks(1));
 }
 
 /** @param {CustomEvent} e */
-function choseEventHandler(e) {
-    console.log(e.detail);
+function chooseEventHandler(e) {
+    const books = myGetBooksFunction(e.detail.value);
+    updateBookCards(books);
 }
 
 /** @param {Event} e */
@@ -119,7 +122,7 @@ function filtersEventHandler(e) {
     // Объект: ключ - название свойства книги, 
     // значение - выбранные значения свойства 
     // в соответствующей карточке фильтров
-    let conditions = {};
+    const filters = {};
     cards.forEach(card => {
         const selector = '.checkbox__browser-checkbox:checked + .checkbox__items-left .checkbox__text';
         const values = Array.from(card.querySelectorAll(selector))
@@ -128,41 +131,43 @@ function filtersEventHandler(e) {
             });
 
         const prop = card.getAttribute('property');
-        conditions[prop] = values;
+        filters[prop] = values;
     });
 
-    covers.forEach(cover => {
-        for (const prop in cover.props) {
-            // Если свойство не фильтруется
-            if (!conditions[prop]) continue;
+    const value = document.querySelector('.main-page__search-form')
+        .getAttribute('value');
 
-            // Если для свойства нет условий 
-            // (ничего не выбрано в соот. карточке фильтров)
-            if (!conditions[prop].length) continue;
-            if (!conditions[prop].includes(cover.props[prop])) {
-                cover.displayed = false;
-                return; // Выход из внешнего цикла
-            }
-        }
-        cover.displayed = true;
-    });
+    const { pages, getBooks } = Service.getData(value, 8, mySortFunction, filters);
 
-    updateBookCards(covers);
+    myFilters = filters
+    myGetBooksFunction = getBooks;
+
+    updateBookCards(getBooks(1));
+
+    document.querySelector('.main-page__pagination')
+        .setAttribute('pages', pages);
 }
 
 /** @param {MouseEvent} e */
 function clearEventHandler(e) {
     const selector = '.main-page__filters-card .checkbox__browser-checkbox:checked';
+    const value = document.querySelector('.main-page__search-form')
+        .getAttribute('value');
+
     Array.from(document.querySelectorAll(selector))
         .forEach(checkbox => {
             checkbox.checked = false;
         });
-    
-    covers.forEach(cover => {
-        cover.displayed = true;
-    });
 
-    updateBookCards(covers);
+    myFilters = {};
+    const { pages, getBooks } = Service.getData(value, 8, mySortFunction, myFilters);
+
+    myGetBooksFunction = getBooks;
+
+    document.querySelector('.main-page__pagination')
+        .setAttribute('pages', pages);
+
+    updateBookCards(getBooks(1));
 }
 
 //#endregion

@@ -1,3 +1,5 @@
+const filtersNames = ["author", "format", "publisher", "category", "series"];
+
 const books = [
     {
         title: "Ведьмак. Последнее желание. Меч предназначения",
@@ -137,19 +139,46 @@ export default class Service {
     }
 
     /**
-     * @param {string} title 
-     * @returns {object[]} array of matched books
+     * @param {string} value 
+     * @param {number} limit 
+     * @param {Function} sortFunc
+     * @param {object.<string, string[]>} filters
      */
-    static getBooksMatching(title) {
-        if (!title.length) return [];
-
-        const ans = [];
-        books.forEach(book => {
-            if (book.title.toLowerCase().includes(title.toLowerCase())) {
-                ans.push(book);
-            }
+    static getData(value, limit, sortFunc, filters = {}) {
+        const searchedBooks = books.filter(book => {
+            return book.title.toLowerCase().includes(value.toLowerCase());
         });
-        return ans;
+
+        const filteredBooks = searchedBooks.filter(book => {
+            for (const filterName in filters) {
+                if (!filters[filterName].length) continue;
+                if (!filters[filterName].includes(book[filterName])) {
+                    return false;
+                };
+            }
+            return true;
+        });
+
+        filteredBooks.sort((a, b) => sortFunc(a, b));
+
+        const allFilters = {};
+        for (const filterName of filtersNames) {
+            allFilters[filterName] = books.map(book => book[filterName]);
+        }
+
+        return {
+            pages: Math.ceil(filteredBooks.length / limit),
+            filters: allFilters,
+            /**
+             * @param {number} page 
+             * @returns {object[]} books
+             */
+            getBooks(page) {
+                return filteredBooks.slice(
+                    (page - 1) * limit,
+                    (page - 1) * limit + limit);
+            }
+        }
     }
 
     /** @returns {string[]} array of popular titles */
