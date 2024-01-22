@@ -49,6 +49,10 @@
         justify-content: center;
     }
 
+    &__no-results-message {
+        display: none;
+    }
+
     $element-selector: &;
 
     &[state="start"] {
@@ -56,16 +60,7 @@
 
             &__my-select,
             &__sidebar,
-            &__no-results-message,
             &__pagination {
-                display: none;
-            }
-        }
-    }
-
-    &[state="results"] {
-        #{$element-selector} {
-            &__no-results-message {
                 display: none;
             }
         }
@@ -73,6 +68,9 @@
 
     &[state="error"] {
         #{$element-selector} {
+            &__no-results-message {
+                display: block;
+            }
 
             &__my-select,
             &__sidebar,

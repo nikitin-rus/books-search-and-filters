@@ -1,13 +1,27 @@
+@use "../base/vars";
+
 .book-card {
     display: flex;
     flex-direction: column;
 
-    &__cover {
-        margin-bottom: 12px;
+    &:hover {
+        & .book-cover { 
+            border-color: vars.$color-black;
+        }
     }
 
+    &__cover {
+        margin-bottom: 12px;
+        pointer-events: none;
+    }
+    
     &__title {
         margin-bottom: 6px;
+    }
+    
+    &__info {
+        user-select: none;
+        pointer-events: none;
     }
 
     &__title,

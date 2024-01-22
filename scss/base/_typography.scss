@@ -35,6 +35,19 @@ h5 {
     @extend %heading-5;
 }
 
+%heading-6 {
+    font-family: "Open Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.15px;
+}
+
+h6 {
+    @extend %heading-6;
+}
+
 %body-1 {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
@@ -135,5 +148,11 @@ h5 {
 
     &__author {
         @extend %body-2;
+    }
+}
+
+.book-info-popup {
+    &__title {
+        font-weight: bold;
     }
 }

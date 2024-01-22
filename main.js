@@ -1,6 +1,8 @@
 import { Counter } from "./src/counter";
 import { createBookCardHTML } from "./src/components/book-card";
 import Service from "./src/service-imitation";
+import createPopupOverlayHTML from "./src/components/popup/popup-overlay";
+import createBookInfoPopupHTML from "./src/components/popup/book-info-popup";
 
 let myFilters = {};
 let myGetBooksFunction;
@@ -16,6 +18,12 @@ function updateBookCards(books) {
     });
 
     document.querySelector('.main-page__cards').innerHTML = cardsHTML;
+}
+
+/** @param {string} popupHTML */
+function displayPopup(popupHTML) {
+    document.body
+        .insertAdjacentHTML(`beforeend`, createPopupOverlayHTML(popupHTML));
 }
 
 /** 
@@ -50,6 +58,9 @@ document.querySelector('.main-page__filters')
 
 document.querySelector('.main-page__my-button')
     .addEventListener('click', (e) => clearEventHandler(e));
+
+document.querySelector('.main-page__cards')
+    .addEventListener('click', (e) => cardsClickEventHandler(e));
 
 //#endregion
 
@@ -168,6 +179,30 @@ function clearEventHandler(e) {
         .setAttribute('pages', pages);
 
     updateBookCards(getBooks(1));
+}
+
+/** @param {MouseEvent} e */
+function cardsClickEventHandler(e) {
+    const cards = document.querySelectorAll('.book-card');
+    const pagination = document.querySelector('.my-pagination');
+
+    const index = Array.from(cards).indexOf(e.target);
+    const page = +pagination.getAttribute('chosen');
+
+    const books = myGetBooksFunction(page);
+    const popupHTML = createBookInfoPopupHTML(books[index]);
+
+    displayPopup(popupHTML);
+
+    const btn = document.querySelector('.book-info-popup__close-btn');
+
+    btn.addEventListener('click', (e) => cardBtnCloseClick(e));
+}
+
+/** @param {MouseEvent} e */
+function cardBtnCloseClick(e) {
+    const popup = document.body.querySelector('.popup-overlay');
+    document.body.removeChild(popup);
 }
 
 //#endregion
